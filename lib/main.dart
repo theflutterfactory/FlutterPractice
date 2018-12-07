@@ -8,8 +8,24 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Flutter practice"),
+          title: Text("Pokemon"),
         ),
+        body: Column(
+          children: [
+            Card(
+                margin: EdgeInsets.all(16),
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Row(
+                    children: <Widget>[
+                      Image.asset('assets/gengar.png'),
+                      Text('Gengar')
+                    ],
+                  ),
+                )
+            ),
+          ],
+        )
       )
     );
   }
