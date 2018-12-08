@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
+}
+
+class _MyAppState extends State<MyApp>{
+  List<String> pokemon = ['Gengar'];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,17 +28,18 @@ class MyApp extends StatelessWidget {
                   onPressed: (){},
                 )
             ),
-            Card(
+            Column(children: pokemon.map((element) =>Card(
                 margin: EdgeInsets.all(16),
                 child: Padding(
                   padding: EdgeInsets.all(16),
                   child: Row(
                     children: <Widget>[
                       Image.asset('assets/gengar.png'),
-                      Text('Gengar')
+                      Text(element)
                     ],
                   ),
                 )
+            )).toList()
             ),
           ],
         )
