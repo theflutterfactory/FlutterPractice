@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'pokemon.dart';
 
 class PokemonManager extends StatefulWidget{
+
+  final String startingPokemon;
+
+  PokemonManager(this.startingPokemon);
+
   @override
   State<StatefulWidget> createState() {
     return _PokemonManagerState();
@@ -10,7 +15,13 @@ class PokemonManager extends StatefulWidget{
 }
 
 class _PokemonManagerState extends State<PokemonManager>{
-  List<String> pokemon = ['Gengar'];
+  List<String> pokemon = [];
+
+  @override
+  void initState() {
+    pokemon.add(widget.startingPokemon);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

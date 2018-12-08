@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text("Pokemon"),
         ),
-        body: PokemonManager()
+        body: PokemonManager('Gengar')
       )
     );
   }
