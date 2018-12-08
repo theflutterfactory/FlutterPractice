@@ -25,7 +25,11 @@ class _MyAppState extends State<MyApp>{
                 margin: EdgeInsets.all(10),
                 child: RaisedButton(
                   child: Text('Add Pokemon'),
-                  onPressed: (){},
+                  onPressed: (){
+                    setState(() {
+                      pokemon.add("Mew");
+                    });
+                  },
                 )
             ),
             Column(children: pokemon.map((element) =>Card(
