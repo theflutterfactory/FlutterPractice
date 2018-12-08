@@ -12,6 +12,13 @@ class MyApp extends StatelessWidget {
         ),
         body: Column(
           children: [
+            Container(
+                margin: EdgeInsets.all(10),
+                child: RaisedButton(
+                  child: Text('Add Pokemon'),
+                  onPressed: (){},
+                )
+            ),
             Card(
                 margin: EdgeInsets.all(16),
                 child: Padding(
