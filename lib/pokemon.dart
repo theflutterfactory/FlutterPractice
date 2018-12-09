@@ -10,17 +10,33 @@ class Pokemon extends StatelessWidget {
       color: Theme.of(context).primaryColor,
       margin: EdgeInsets.all(16),
       child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Row(
-          children: <Widget>[
-            Image.asset('assets/gengar.png'),
-            Text(
-              pokemonList[index],
-              style: TextStyle(color: Colors.white, fontSize: 22),
-            )
-          ],
-        ),
-      ),
+          padding: EdgeInsets.all(16),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Image.asset('assets/gengar.png'),
+                  Text(
+                    pokemonList[index],
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                ],
+              ),
+              ButtonBar(
+                alignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      "Details",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    color: Theme.of(context).accentColor,
+                    onPressed: () => {},
+                  )
+                ],
+              )
+            ],
+          )),
     );
   }
 
