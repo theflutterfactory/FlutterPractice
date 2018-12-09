@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'pokemon.dart';
 import 'pokemon_control.dart';
 
-class PokemonManager extends StatefulWidget{
-
+class PokemonManager extends StatefulWidget {
   final String startingPokemon;
 
   PokemonManager(this.startingPokemon);
@@ -15,7 +14,7 @@ class PokemonManager extends StatefulWidget{
   }
 }
 
-class _PokemonManagerState extends State<PokemonManager>{
+class _PokemonManagerState extends State<PokemonManager> {
   List<String> _pokemon = [];
 
   @override
@@ -33,11 +32,8 @@ class _PokemonManagerState extends State<PokemonManager>{
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Container(
-        margin: EdgeInsets.all(16),
-        child: PokemonControl(_addPokemon)
-    ),
-      Pokemon(_pokemon)
+      Container(margin: EdgeInsets.all(16), child: PokemonControl(_addPokemon)),
+      Expanded(child: Pokemon(_pokemon))
     ]);
   }
 }
