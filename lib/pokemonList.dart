@@ -14,15 +14,16 @@ class PokemonList extends StatelessWidget {
       child: Padding(
           padding: EdgeInsets.all(16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Image.asset('assets/gengar.png'),
-                  Text(
-                    pokemonList[index],
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                ],
+              Text(
+                pokemonList[index],
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+              Image.asset(
+                'assets/gengar.png',
+                height: 150,
               ),
               ButtonBar(
                 alignment: MainAxisAlignment.center,
