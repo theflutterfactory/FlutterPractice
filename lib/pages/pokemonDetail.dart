@@ -7,14 +7,27 @@ class PokemonDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text("Pokemon Detail"),
       ),
-      body: Column(
-        children: <Widget>[
-          Text('Details'),
-          RaisedButton(
-            child: Text('BACK'),
-            onPressed: () => Navigator.pop(context),
-          )
-        ],
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Image.asset(
+              'assets/gengar.png',
+              height: 300,
+            ),
+            Container(
+              child: Text('Details'),
+              padding: EdgeInsets.all(16),
+            ),
+            RaisedButton(
+              child: Text(
+                'BACK',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              color: Theme.of(context).accentColor,
+              onPressed: () => Navigator.pop(context),
+            )
+          ],
+        ),
       ),
     );
   }
