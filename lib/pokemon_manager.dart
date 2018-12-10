@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pokemon.dart';
+import 'pokemonList.dart';
 import 'pokemon_control.dart';
 
 class PokemonManager extends StatefulWidget {
@@ -25,7 +25,7 @@ class _PokemonManagerState extends State<PokemonManager> {
   Widget build(BuildContext context) {
     return Column(children: [
       Container(margin: EdgeInsets.all(16), child: PokemonControl(_addPokemon)),
-      Expanded(child: Pokemon(_pokemonList))
+      Expanded(child: PokemonList(_pokemonList))
     ]);
   }
 }

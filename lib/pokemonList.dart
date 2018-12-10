@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Pokemon extends StatelessWidget {
+class PokemonList extends StatelessWidget {
   final List<String> pokemonList;
 
-  Pokemon(this.pokemonList);
+  PokemonList(this.pokemonList);
 
   Widget _buildPokemonItem(BuildContext context, int index) {
     return Card(
