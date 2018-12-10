@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './pages/pokemonDetail.dart';
+
 class PokemonList extends StatelessWidget {
   final List<String> pokemonList;
 
@@ -26,12 +28,14 @@ class PokemonList extends StatelessWidget {
                 alignment: MainAxisAlignment.center,
                 children: <Widget>[
                   FlatButton(
-                    child: Text(
-                      "Details",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
+                    child: Text("Details", style: TextStyle(color: Colors.white, fontSize: 16)),
                     color: Theme.of(context).accentColor,
-                    onPressed: () => {},
+                    onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PokemonDetail(),
+                          ),
+                        ),
                   )
                 ],
               )
