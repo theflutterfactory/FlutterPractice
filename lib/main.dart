@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/pokemon.dart';
+import 'pages/auth.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.red, accentColor: Colors.purple),
-      home: Pokemon(),
+      home: AuthPage(),
     );
   }
 }
