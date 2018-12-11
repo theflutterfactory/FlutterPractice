@@ -60,6 +60,11 @@ class _MyAppState extends State<MyApp> {
 
         return null;
       },
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+          builder: (context) => Pokemon(_pokemonList, _addPokemon, _deletePokemon),
+        );
+      },
     );
   }
 }
