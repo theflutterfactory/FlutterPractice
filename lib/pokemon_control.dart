@@ -14,7 +14,9 @@ class PokemonControl extends StatelessWidget {
       ),
       color: Theme.of(context).accentColor,
       onPressed: () {
-        addPokemon("Ghastly");
+        addPokemon(
+          {'title': 'Gengar', 'image': 'assets/gengar.png'},
+        );
       },
     );
   }

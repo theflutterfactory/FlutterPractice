@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 class PokemonDetail extends StatelessWidget {
+  final String title;
+  final String imageUrl;
+
+  PokemonDetail(this.title, this.imageUrl);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pokemon Detail"),
+        title: Text(title),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Image.asset(
-              'assets/gengar.png',
-              height: 300,
-            ),
+            Image.asset(imageUrl, height: 300),
             Container(
-              child: Text('Details'),
+              child: Text(title),
               padding: EdgeInsets.all(16),
             ),
             RaisedButton(

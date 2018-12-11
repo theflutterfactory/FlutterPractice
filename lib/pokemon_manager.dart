@@ -13,9 +13,9 @@ class PokemonManager extends StatefulWidget {
 }
 
 class _PokemonManagerState extends State<PokemonManager> {
-  List<String> _pokemonList = [];
+  List<Map<String, String>> _pokemonList = [];
 
-  void _addPokemon(String pokemon) {
+  void _addPokemon(Map<String, String> pokemon) {
     setState(() {
       _pokemonList.add(pokemon);
     });

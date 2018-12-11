@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './pages/pokemonDetail.dart';
 
 class PokemonList extends StatelessWidget {
-  final List<String> pokemonList;
+  final List<Map<String, String>> pokemonList;
 
   PokemonList(this.pokemonList);
 
@@ -18,13 +18,10 @@ class PokemonList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                pokemonList[index],
+                pokemonList[index]['title'],
                 style: TextStyle(color: Colors.white, fontSize: 22),
               ),
-              Image.asset(
-                'assets/gengar.png',
-                height: 150,
-              ),
+              Image.asset(pokemonList[index]['image'], height: 150),
               ButtonBar(
                 alignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -34,7 +31,10 @@ class PokemonList extends StatelessWidget {
                     onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PokemonDetail(),
+                            builder: (context) => PokemonDetail(
+                                  pokemonList[index]['title'],
+                                  pokemonList[index]['image'],
+                                ),
                           ),
                         ),
                   )
