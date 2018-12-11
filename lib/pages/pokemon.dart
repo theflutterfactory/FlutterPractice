@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../pokemon_manager.dart';
-import './pokemon_admin.dart';
 
 class Pokemon extends StatelessWidget {
   @override
@@ -17,10 +16,7 @@ class Pokemon extends StatelessWidget {
             ListTile(
               title: Text('Manage Pokemon'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => PokemonAdminPage()),
-                );
+                Navigator.pushReplacementNamed(context, '/admin');
               },
             )
           ],

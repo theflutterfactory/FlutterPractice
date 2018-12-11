@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './pokemon.dart';
 import './pokemon_create.dart';
 import './pokemon_owned.dart';
 
@@ -20,10 +19,7 @@ class PokemonAdminPage extends StatelessWidget {
               ListTile(
                 title: Text('All Pokemon'),
                 onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Pokemon()),
-                  );
+                  Navigator.pushReplacementNamed(context, '/pokemon');
                 },
               )
             ],

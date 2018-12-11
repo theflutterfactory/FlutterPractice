@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './pokemon.dart';
-
 class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,10 +11,7 @@ class AuthPage extends StatelessWidget {
           child: RaisedButton(
             child: Text("Login"),
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Pokemon()),
-              );
+              Navigator.pushReplacementNamed(context, '/pokemon');
             },
           ),
         ));
