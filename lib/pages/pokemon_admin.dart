@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './pokemon.dart';
+import './pokemon_create.dart';
+import './pokemon_owned.dart';
 
 class PokemonAdminPage extends StatelessWidget {
   @override
@@ -42,8 +44,11 @@ class PokemonAdminPage extends StatelessWidget {
             ],
           ),
         ),
-        body: Center(
-          child: Text('Manage Your Pokemon'),
+        body: TabBarView(
+          children: <Widget>[
+            PokemonCreatePage(),
+            PokemonOwnedPage(),
+          ],
         ),
       ),
     );
