@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './pages/pokemonDetail.dart';
-
 class PokemonList extends StatelessWidget {
   final List<Map<String, String>> pokemonList;
   final Function deletePokemon;
@@ -29,15 +27,9 @@ class PokemonList extends StatelessWidget {
                   FlatButton(
                     child: Text("Details", style: TextStyle(color: Colors.white, fontSize: 16)),
                     color: Theme.of(context).accentColor,
-                    onPressed: () => Navigator.push<bool>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PokemonDetail(
-                                  pokemonList[index]['title'],
-                                  pokemonList[index]['image'],
-                                ),
-                          ),
-                        ).then((bool value) {
+                    onPressed: () =>
+                        Navigator.pushNamed<bool>(context, '/pokemon/' + index.toString())
+                            .then((bool value) {
                           if (value) {
                             deletePokemon(index);
                           }
