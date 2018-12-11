@@ -20,13 +20,27 @@ class PokemonDetail extends StatelessWidget {
               child: Text(title),
               padding: EdgeInsets.all(16),
             ),
-            RaisedButton(
-              child: Text(
-                'BACK',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+            ButtonTheme(
+              minWidth: 160,
+              child: RaisedButton(
+                child: Text(
+                  'BACK',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                color: Theme.of(context).accentColor,
+                onPressed: () => Navigator.pop(context),
               ),
-              color: Theme.of(context).accentColor,
-              onPressed: () => Navigator.pop(context),
+            ),
+            ButtonTheme(
+              minWidth: 160,
+              child: RaisedButton(
+                child: Text(
+                  'DELETE',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                color: Theme.of(context).accentColor,
+                onPressed: () => Navigator.pop(context, true),
+              ),
             )
           ],
         ),
