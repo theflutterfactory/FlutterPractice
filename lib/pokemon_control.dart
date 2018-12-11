@@ -7,6 +7,8 @@ class PokemonControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var now = new DateTime.now();
+
     return RaisedButton(
       child: Text(
         'Add Pokemon',
@@ -15,7 +17,7 @@ class PokemonControl extends StatelessWidget {
       color: Theme.of(context).accentColor,
       onPressed: () {
         addPokemon(
-          {'title': 'Gengar', 'image': 'assets/gengar.png'},
+          {'title': 'Gengar' + now.second.toString(), 'image': 'assets/gengar.png'},
         );
       },
     );
