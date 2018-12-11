@@ -8,41 +8,47 @@ class PokemonDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Image.asset(imageUrl, height: 300),
-            Container(
-              child: Text(title),
-              padding: EdgeInsets.all(16),
-            ),
-            ButtonTheme(
-              minWidth: 160,
-              child: RaisedButton(
-                child: Text(
-                  'BACK',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-                color: Theme.of(context).accentColor,
-                onPressed: () => Navigator.pop(context),
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.pop(context, false);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Image.asset(imageUrl, height: 300),
+              Container(
+                child: Text(title),
+                padding: EdgeInsets.all(16),
               ),
-            ),
-            ButtonTheme(
-              minWidth: 160,
-              child: RaisedButton(
-                child: Text(
-                  'DELETE',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+              ButtonTheme(
+                minWidth: 160,
+                child: RaisedButton(
+                  child: Text(
+                    'BACK',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  color: Theme.of(context).accentColor,
+                  onPressed: () => Navigator.pop(context, false),
                 ),
-                color: Theme.of(context).accentColor,
-                onPressed: () => Navigator.pop(context, true),
               ),
-            )
-          ],
+              ButtonTheme(
+                minWidth: 160,
+                child: RaisedButton(
+                  child: Text(
+                    'DELETE',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  color: Theme.of(context).accentColor,
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

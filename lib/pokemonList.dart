@@ -4,8 +4,9 @@ import './pages/pokemonDetail.dart';
 
 class PokemonList extends StatelessWidget {
   final List<Map<String, String>> pokemonList;
+  final Function deletePokemon;
 
-  PokemonList(this.pokemonList);
+  PokemonList(this.pokemonList, this.deletePokemon);
 
   Widget _buildPokemonItem(BuildContext context, int index) {
     return Card(
@@ -28,7 +29,7 @@ class PokemonList extends StatelessWidget {
                   FlatButton(
                     child: Text("Details", style: TextStyle(color: Colors.white, fontSize: 16)),
                     color: Theme.of(context).accentColor,
-                    onPressed: () => Navigator.push(
+                    onPressed: () => Navigator.push<bool>(
                           context,
                           MaterialPageRoute(
                             builder: (context) => PokemonDetail(
@@ -36,7 +37,11 @@ class PokemonList extends StatelessWidget {
                                   pokemonList[index]['image'],
                                 ),
                           ),
-                        ),
+                        ).then((bool value) {
+                          if (value) {
+                            deletePokemon(index);
+                          }
+                        }),
                   )
                 ],
               )
