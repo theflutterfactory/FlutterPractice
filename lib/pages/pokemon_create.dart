@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class PokemonCreatePage extends StatefulWidget {
+  final Function addProduct;
+
+  PokemonCreatePage(this.addProduct);
+
   @override
   State<StatefulWidget> createState() {
     return _PokemonCreatePageState();
@@ -53,6 +57,20 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
               });
             },
           ),
+          RaisedButton(
+            child: Text("Save"),
+            onPressed: () {
+              final Map<String, dynamic> pokmeon = {
+                'name': name,
+                'description': description,
+                'type': type,
+                'startingHealth': startingHealth,
+                'image': 'assets/gengar.png'
+              };
+
+              widget.addProduct(pokmeon);
+            },
+          )
         ],
       ),
     );

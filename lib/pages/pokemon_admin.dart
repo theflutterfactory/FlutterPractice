@@ -4,6 +4,11 @@ import './pokemon_create.dart';
 import './pokemon_owned.dart';
 
 class PokemonAdminPage extends StatelessWidget {
+  final Function addPokemon;
+  final Function deletePokemon;
+
+  PokemonAdminPage(this.addPokemon, this.deletePokemon);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -42,7 +47,7 @@ class PokemonAdminPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            PokemonCreatePage(),
+            PokemonCreatePage(addPokemon),
             PokemonOwnedPage(),
           ],
         ),

@@ -15,9 +15,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, String>> _pokemonList = [];
+  List<Map<String, dynamic>> _pokemonList = [];
 
-  void _addPokemon(Map<String, String> pokemon) {
+  void _addPokemon(Map<String, dynamic> pokemon) {
     setState(() {
       _pokemonList.add(pokemon);
     });
@@ -35,14 +35,11 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primarySwatch: Colors.red, accentColor: Colors.purple),
       home: AuthPage(),
       routes: {
-        '/pokemon': (context) => Pokemon(_pokemonList, _addPokemon, _deletePokemon),
-        '/admin': (context) => PokemonAdminPage(),
+        '/pokemon': (context) => Pokemon(_pokemonList),
+        '/admin': (context) => PokemonAdminPage(_addPokemon, _deletePokemon),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
-
-        Set<String> set = Set.from(pathElements);
-        set.forEach((element) => print(element));
 
         if (pathElements[0] != '') {
           return null;
@@ -52,7 +49,7 @@ class _MyAppState extends State<MyApp> {
           final int index = int.parse(pathElements[2]);
           return MaterialPageRoute<bool>(
             builder: (context) => PokemonDetail(
-                  _pokemonList[index]['title'],
+                  _pokemonList[index]['name'],
                   _pokemonList[index]['image'],
                 ),
           );
@@ -62,7 +59,7 @@ class _MyAppState extends State<MyApp> {
       },
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(
-          builder: (context) => Pokemon(_pokemonList, _addPokemon, _deletePokemon),
+          builder: (context) => Pokemon(_pokemonList),
         );
       },
     );

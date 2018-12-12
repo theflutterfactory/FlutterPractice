@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PokemonList extends StatelessWidget {
-  final List<Map<String, String>> pokemonList;
-  final Function deletePokemon;
+  final List<Map<String, dynamic>> pokemonList;
 
-  PokemonList(this.pokemonList, this.deletePokemon);
+  PokemonList(this.pokemonList);
 
   Widget _buildPokemonItem(BuildContext context, int index) {
     return Card(
@@ -17,7 +16,7 @@ class PokemonList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                pokemonList[index]['title'],
+                pokemonList[index]['name'],
                 style: TextStyle(color: Colors.white, fontSize: 22),
               ),
               Image.asset(pokemonList[index]['image'], height: 150),
@@ -28,12 +27,7 @@ class PokemonList extends StatelessWidget {
                     child: Text("Details", style: TextStyle(color: Colors.white, fontSize: 16)),
                     color: Theme.of(context).accentColor,
                     onPressed: () =>
-                        Navigator.pushNamed<bool>(context, '/pokemon/' + index.toString())
-                            .then((bool value) {
-                          if (value) {
-                            deletePokemon(index);
-                          }
-                        }),
+                        Navigator.pushNamed<bool>(context, '/pokemon/' + index.toString()),
                   )
                 ],
               )

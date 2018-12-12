@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import '../pokemon_manager.dart';
 
 class Pokemon extends StatelessWidget {
-  final List<Map<String, String>> pokemonList;
-  final Function addPokemon;
-  final Function deletePokemon;
+  final List<Map<String, dynamic>> pokemonList;
 
-  Pokemon(this.pokemonList, this.addPokemon, this.deletePokemon);
+  Pokemon(this.pokemonList);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,7 @@ class Pokemon extends StatelessWidget {
       appBar: AppBar(
         title: Text("Pokemon"),
       ),
-      body: PokemonManager(pokemonList, addPokemon, deletePokemon),
+      body: PokemonManager(pokemonList),
     );
   }
 }
