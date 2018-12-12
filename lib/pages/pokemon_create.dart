@@ -12,10 +12,10 @@ class PokemonCreatePage extends StatefulWidget {
 }
 
 class _PokemonCreatePageState extends State<PokemonCreatePage> {
-  String name = '';
-  String description = '';
-  String type = '';
-  double startingHealth;
+  String _name = '';
+  String _description = '';
+  String _type = '';
+  double _startingHealth;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
             decoration: InputDecoration(labelText: 'Name'),
             onChanged: (String value) {
               setState(() {
-                name = value;
+                _name = value;
               });
             },
           ),
@@ -36,7 +36,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
             decoration: InputDecoration(labelText: 'Description'),
             onChanged: (String value) {
               setState(() {
-                description = value;
+                _description = value;
               });
             },
           ),
@@ -44,7 +44,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
             decoration: InputDecoration(labelText: 'Type'),
             onChanged: (String value) {
               setState(() {
-                type = value;
+                _type = value;
               });
             },
           ),
@@ -53,7 +53,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
             decoration: InputDecoration(labelText: 'Starting Health'),
             onChanged: (String value) {
               setState(() {
-                startingHealth = double.parse(value);
+                _startingHealth = double.parse(value);
               });
             },
           ),
@@ -67,10 +67,10 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
               ),
               onPressed: () {
                 final Map<String, dynamic> pokmeon = {
-                  'name': name,
-                  'description': description,
-                  'type': type,
-                  'startingHealth': startingHealth,
+                  'name': _name,
+                  'description': _description,
+                  'type': _type,
+                  'startingHealth': _startingHealth,
                   'image': 'assets/gengar.png'
                 };
 
