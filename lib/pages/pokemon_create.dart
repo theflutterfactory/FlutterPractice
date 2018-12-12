@@ -15,39 +15,46 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextField(
-          onChanged: (String value) {
-            setState(() {
-              name = value;
-            });
-          },
-        ),
-        TextField(
-          maxLines: 4,
-          onChanged: (String value) {
-            setState(() {
-              description = value;
-            });
-          },
-        ),
-        TextField(
-          onChanged: (String value) {
-            setState(() {
-              type = value;
-            });
-          },
-        ),
-        TextField(
-          keyboardType: TextInputType.number,
-          onChanged: (String value) {
-            setState(() {
-              startingHealth = double.parse(value);
-            });
-          },
-        ),
-      ],
+    return Container(
+      margin: EdgeInsets.all(16),
+      child: ListView(
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(labelText: 'Name'),
+            onChanged: (String value) {
+              setState(() {
+                name = value;
+              });
+            },
+          ),
+          TextField(
+            maxLines: 4,
+            decoration: InputDecoration(labelText: 'Description'),
+            onChanged: (String value) {
+              setState(() {
+                description = value;
+              });
+            },
+          ),
+          TextField(
+            decoration: InputDecoration(labelText: 'Type'),
+            onChanged: (String value) {
+              setState(() {
+                type = value;
+              });
+            },
+          ),
+          TextField(
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(labelText: 'Starting Health'),
+            onChanged: (String value) {
+              setState(() {
+                startingHealth = double.parse(value);
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }
