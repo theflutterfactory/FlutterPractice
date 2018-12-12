@@ -57,20 +57,28 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
               });
             },
           ),
-          RaisedButton(
-            child: Text("Save"),
-            onPressed: () {
-              final Map<String, dynamic> pokmeon = {
-                'name': name,
-                'description': description,
-                'type': type,
-                'startingHealth': startingHealth,
-                'image': 'assets/gengar.png'
-              };
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 16),
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              child: Text(
+                "Save",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              onPressed: () {
+                final Map<String, dynamic> pokmeon = {
+                  'name': name,
+                  'description': description,
+                  'type': type,
+                  'startingHealth': startingHealth,
+                  'image': 'assets/gengar.png'
+                };
 
-              widget.addProduct(pokmeon);
-            },
-          )
+                Navigator.pushReplacementNamed(context, '/pokemon');
+                widget.addProduct(pokmeon);
+              },
+            ),
+          ),
         ],
       ),
     );
