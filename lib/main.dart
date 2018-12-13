@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './pages/auth.dart';
 import './pages/pokemon_admin.dart';
 import './pages/pokemon.dart';
-import './pages//pokemonDetail.dart';
+import './pages//pokemon_detail.dart';
 
 void main() => runApp(MyApp());
 
