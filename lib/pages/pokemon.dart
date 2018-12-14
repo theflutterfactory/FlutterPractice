@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../pokemon_list.dart';
+import '../widgets/pokemon_list.dart';
 
 class Pokemon extends StatelessWidget {
   final List<Map<String, dynamic>> pokemonList;
