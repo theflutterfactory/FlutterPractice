@@ -71,7 +71,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
                   'description': _description,
                   'type': _type,
                   'startingHealth': _startingHealth,
-                  'image': 'assets/gengar.png'
+                  'image': 'assets/pikachu.png'
                 };
 
                 Navigator.pushReplacementNamed(context, '/pokemon');

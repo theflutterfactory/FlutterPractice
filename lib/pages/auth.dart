@@ -24,6 +24,7 @@ class _AuthPageState extends State<AuthPage> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Image.asset('assets/pikachu.png', height: 200),
                 Text(
                   "Pokemon Manager",
                   textAlign: TextAlign.center,
