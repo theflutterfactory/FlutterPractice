@@ -19,57 +19,61 @@ class _AuthPageState extends State<AuthPage> {
         title: Text("LOGIN"),
       ),
       body: Container(
-        margin: EdgeInsets.all(16.0),
-        child: ListView(
-          children: <Widget>[
-            SizedBox(height: 32),
-            Text(
-              "Pokemon Manager",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 32,
-              ),
+        padding: EdgeInsets.all(16.0),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text(
+                  "Pokemon Manager",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 32,
+                  ),
+                ),
+                SizedBox(height: 64),
+                TextField(
+                  decoration: InputDecoration(labelText: "Email"),
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (String value) {
+                    setState(() {
+                      _email = value;
+                    });
+                  },
+                ),
+                TextField(
+                  decoration: InputDecoration(labelText: "Password"),
+                  obscureText: true,
+                  onChanged: (String value) {
+                    setState(() {
+                      _password = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 16),
+                SwitchListTile(
+                  value: _acceptTerms,
+                  title: Text('Accept Terms'),
+                  onChanged: (bool value) {
+                    setState(() {
+                      _acceptTerms = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 16),
+                RaisedButton(
+                  child: Text(
+                    "LOGIN",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  color: Theme.of(context).accentColor,
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/pokemon');
+                  },
+                ),
+              ],
             ),
-            SizedBox(height: 32),
-            TextField(
-              decoration: InputDecoration(labelText: "Email"),
-              keyboardType: TextInputType.emailAddress,
-              onChanged: (String value) {
-                setState(() {
-                  _email = value;
-                });
-              },
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: "Password"),
-              obscureText: true,
-              onChanged: (String value) {
-                setState(() {
-                  _password = value;
-                });
-              },
-            ),
-            SwitchListTile(
-              value: _acceptTerms,
-              title: Text('Accept Terms'),
-              onChanged: (bool value) {
-                setState(() {
-                  _acceptTerms = value;
-                });
-              },
-            ),
-            SizedBox(height: 16),
-            RaisedButton(
-              child: Text(
-                "LOGIN",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-              color: Theme.of(context).accentColor,
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/pokemon');
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
