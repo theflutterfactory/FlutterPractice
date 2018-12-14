@@ -18,6 +18,7 @@ class Pokemon extends StatelessWidget {
               title: Text("Julian Currie"),
             ),
             ListTile(
+              leading: Icon(Icons.edit),
               title: Text('Manage Pokemon'),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/admin');

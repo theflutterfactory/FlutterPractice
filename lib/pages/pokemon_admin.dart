@@ -22,6 +22,7 @@ class PokemonAdminPage extends StatelessWidget {
                 title: Text("Julian Currie"),
               ),
               ListTile(
+                leading: Icon(Icons.people),
                 title: Text('All Pokemon'),
                 onTap: () {
                   Navigator.pushReplacementNamed(context, '/pokemon');
