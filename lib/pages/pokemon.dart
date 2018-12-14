@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../pokemon_manager.dart';
+import '../pokemon_list.dart';
 
 class Pokemon extends StatelessWidget {
   final List<Map<String, dynamic>> pokemonList;
@@ -30,7 +30,7 @@ class Pokemon extends StatelessWidget {
       appBar: AppBar(
         title: Text("Pokemon"),
       ),
-      body: PokemonManager(pokemonList),
+      body: PokemonList(pokemonList),
     );
   }
 }
