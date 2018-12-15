@@ -18,21 +18,21 @@ class _AuthPageState extends State<AuthPage> {
       appBar: AppBar(
         title: Text("LOGIN"),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Center(
-          child: SingleChildScrollView(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
             child: Column(
               children: <Widget>[
-                Image.asset('assets/pikachu.png', height: 200),
+                Image.asset('assets/pikachu.png', height: 160),
                 Text(
                   "Pokemon Manager",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 28,
                   ),
                 ),
-                SizedBox(height: 64),
+                SizedBox(height: 32),
                 TextField(
                   decoration: InputDecoration(labelText: "Email"),
                   keyboardType: TextInputType.emailAddress,
