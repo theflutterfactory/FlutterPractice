@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../ui/button_dark.dart';
+
 class PokemonDetail extends StatelessWidget {
   final String title;
   final String imageUrl;
@@ -45,32 +47,9 @@ class PokemonDetail extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Image.asset(imageUrl, height: 300),
-              Container(
-                child: Text(title),
-                padding: EdgeInsets.all(16),
-              ),
-              ButtonTheme(
-                minWidth: 160,
-                child: RaisedButton(
-                  child: Text(
-                    'BACK',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () => Navigator.pop(context, false),
-                ),
-              ),
-              ButtonTheme(
-                minWidth: 160,
-                child: RaisedButton(
-                  child: Text(
-                    'DELETE',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () => _showWarningDialog(context),
-                ),
-              )
+              Container(child: Text(title), padding: EdgeInsets.all(16)),
+              DarkButton('BACK', () => Navigator.pop(context, false)),
+              DarkButton('DELETE', () => _showWarningDialog(context)),
             ],
           ),
         ),

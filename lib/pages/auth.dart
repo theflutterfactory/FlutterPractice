@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../ui/button_dark.dart';
+
 class AuthPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -62,16 +64,7 @@ class _AuthPageState extends State<AuthPage> {
                   },
                 ),
                 SizedBox(height: 16),
-                RaisedButton(
-                  child: Text(
-                    "LOGIN",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/pokemon');
-                  },
-                ),
+                DarkButton('LOGIN', () => Navigator.pushReplacementNamed(context, '/pokemon')),
               ],
             ),
           ),
