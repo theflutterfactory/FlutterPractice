@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../ui/button_dark.dart';
+
 class PokemonCreatePage extends StatefulWidget {
   final Function addProduct;
 
@@ -57,28 +59,19 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
               });
             },
           ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 16),
-            child: RaisedButton(
-              color: Theme.of(context).accentColor,
-              child: Text(
-                "Save",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-              onPressed: () {
-                final Map<String, dynamic> pokmeon = {
-                  'name': _name,
-                  'description': _description,
-                  'type': _type,
-                  'startingHealth': _startingHealth,
-                  'image': 'assets/pikachu.png'
-                };
+          SizedBox(height: 16),
+          DarkButton('SAVE', () {
+            final Map<String, dynamic> pokmeon = {
+              'name': _name,
+              'description': _description,
+              'type': _type,
+              'startingHealth': _startingHealth,
+              'image': 'assets/pikachu.png'
+            };
 
-                Navigator.pushReplacementNamed(context, '/pokemon');
-                widget.addProduct(pokmeon);
-              },
-            ),
-          ),
+            Navigator.pushReplacementNamed(context, '/pokemon');
+            widget.addProduct(pokmeon);
+          }),
         ],
       ),
     );
