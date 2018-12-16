@@ -19,6 +19,19 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   String _type = '';
   double _startingHealth;
 
+  void _submitPokemon() {
+    final Map<String, dynamic> pokmeon = {
+      'name': _name,
+      'description': _description,
+      'type': _type,
+      'startingHealth': _startingHealth,
+      'image': 'assets/pikachu.png'
+    };
+
+    Navigator.pushReplacementNamed(context, '/pokemon');
+    widget.addProduct(pokmeon);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,18 +73,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
             },
           ),
           SizedBox(height: 16),
-          DarkButton('SAVE', () {
-            final Map<String, dynamic> pokmeon = {
-              'name': _name,
-              'description': _description,
-              'type': _type,
-              'startingHealth': _startingHealth,
-              'image': 'assets/pikachu.png'
-            };
-
-            Navigator.pushReplacementNamed(context, '/pokemon');
-            widget.addProduct(pokmeon);
-          }),
+          DarkButton('SAVE', _submitPokemon),
         ],
       ),
     );
