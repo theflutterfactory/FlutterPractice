@@ -9,28 +9,32 @@ class PokemonAdminPage extends StatelessWidget {
 
   PokemonAdminPage(this.addPokemon, this.deletePokemon);
 
+  Widget _buildSideDrawer(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: <Widget>[
+          AppBar(
+            automaticallyImplyLeading: false,
+            title: Text("Julian Currie"),
+          ),
+          ListTile(
+            leading: Icon(Icons.people),
+            title: Text('All Pokemon'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/pokemon');
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        drawer: Drawer(
-          child: Column(
-            children: <Widget>[
-              AppBar(
-                automaticallyImplyLeading: false,
-                title: Text("Julian Currie"),
-              ),
-              ListTile(
-                leading: Icon(Icons.people),
-                title: Text('All Pokemon'),
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, '/pokemon');
-                },
-              )
-            ],
-          ),
-        ),
+        drawer: _buildSideDrawer(context),
         appBar: AppBar(
           title: Text('Manage Pokemon'),
           bottom: TabBar(
