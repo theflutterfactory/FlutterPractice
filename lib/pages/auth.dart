@@ -14,6 +14,10 @@ class _AuthPageState extends State<AuthPage> {
   String _password;
   bool _acceptTerms = false;
 
+  void _login() {
+    Navigator.pushReplacementNamed(context, '/pokemon');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +68,7 @@ class _AuthPageState extends State<AuthPage> {
                   },
                 ),
                 SizedBox(height: 16),
-                DarkButton('LOGIN', () => Navigator.pushReplacementNamed(context, '/pokemon')),
+                DarkButton('LOGIN', _login),
               ],
             ),
           ),
