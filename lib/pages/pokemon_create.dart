@@ -18,8 +18,11 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   String _description = '';
   String _type = '';
   double _startingHealth;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _submitPokemon() {
+    _formKey.currentState.save();
+
     final Map<String, dynamic> pokmeon = {
       'name': _name,
       'description': _description,
@@ -36,45 +39,48 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(16),
-      child: ListView(
-        children: <Widget>[
-          TextField(
-            decoration: InputDecoration(labelText: 'Name'),
-            onChanged: (String value) {
-              setState(() {
-                _name = value;
-              });
-            },
-          ),
-          TextField(
-            maxLines: 4,
-            decoration: InputDecoration(labelText: 'Description'),
-            onChanged: (String value) {
-              setState(() {
-                _description = value;
-              });
-            },
-          ),
-          TextField(
-            decoration: InputDecoration(labelText: 'Type'),
-            onChanged: (String value) {
-              setState(() {
-                _type = value;
-              });
-            },
-          ),
-          TextField(
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(labelText: 'Starting Health'),
-            onChanged: (String value) {
-              setState(() {
-                _startingHealth = double.parse(value);
-              });
-            },
-          ),
-          SizedBox(height: 16),
-          DarkButton('SAVE', _submitPokemon),
-        ],
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Name'),
+              onSaved: (String value) {
+                setState(() {
+                  _name = value;
+                });
+              },
+            ),
+            TextFormField(
+              maxLines: 4,
+              decoration: InputDecoration(labelText: 'Description'),
+              onSaved: (String value) {
+                setState(() {
+                  _description = value;
+                });
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Type'),
+              onSaved: (String value) {
+                setState(() {
+                  _type = value;
+                });
+              },
+            ),
+            TextFormField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: 'Starting Health'),
+              onSaved: (String value) {
+                setState(() {
+                  _startingHealth = double.parse(value);
+                });
+              },
+            ),
+            SizedBox(height: 16),
+            DarkButton('SAVE', _submitPokemon),
+          ],
+        ),
       ),
     );
   }
