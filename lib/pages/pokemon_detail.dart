@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import '../ui/button_dark.dart';
 
 class PokemonDetail extends StatelessWidget {
-  final String title;
+  final String name;
   final String imageUrl;
+  final String description;
 
-  PokemonDetail(this.title, this.imageUrl);
+  PokemonDetail(this.name, this.imageUrl, this.description);
 
   _showWarningDialog(BuildContext context) {
     showDialog(
@@ -42,16 +43,25 @@ class PokemonDetail extends StatelessWidget {
         return Future.value(false);
       },
       child: Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Image.asset(imageUrl, height: 300),
-              Container(child: Text(title), padding: EdgeInsets.all(16)),
-              DarkButton('BACK', () => Navigator.pop(context, false)),
-              DarkButton('DELETE', () => _showWarningDialog(context)),
-            ],
-          ),
+        appBar: AppBar(title: Text(name)),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Image.asset(imageUrl, height: 200),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                description,
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+            SizedBox(height: 32),
+            Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[DarkButton('DELETE', () => _showWarningDialog(context))],
+            ),
+          ],
         ),
       ),
     );

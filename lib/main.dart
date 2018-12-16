@@ -51,6 +51,7 @@ class _MyAppState extends State<MyApp> {
             builder: (context) => PokemonDetail(
                   _pokemonList[index]['name'],
                   _pokemonList[index]['image'],
+                  _pokemonList[index]['description'],
                 ),
           );
         }
