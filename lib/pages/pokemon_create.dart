@@ -21,6 +21,10 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _submitPokemon() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+
     _formKey.currentState.save();
 
     final Map<String, dynamic> pokmeon = {
@@ -38,6 +42,15 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   Widget _buildNameField() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Name'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Pokemon name is required';
+        }
+
+        if (value.length < 3 || value.length > 15) {
+          return 'Pokemon name must be between 3 and 15 characters';
+        }
+      },
       onSaved: (String value) {
         setState(() {
           _name = value;
@@ -50,6 +63,15 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     return TextFormField(
       maxLines: 4,
       decoration: InputDecoration(labelText: 'Description'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Pokemon description is required';
+        }
+
+        if (value.length < 10 || value.length > 100) {
+          return 'Pokemon name must be between 10 and 100 characters';
+        }
+      },
       onSaved: (String value) {
         setState(() {
           _description = value;
@@ -61,6 +83,15 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   Widget _buildTypeField() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Type'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Pokemon type is required';
+        }
+
+        if (value.length < 3 || value.length > 20) {
+          return 'Pokemon name must be between 3 and 20 characters';
+        }
+      },
       onSaved: (String value) {
         setState(() {
           _type = value;
@@ -73,6 +104,15 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: 'Starting Health'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Pokemon starting health is required';
+        }
+
+        if (!RegExp(r'^\d{0,2}(\.\d{1,2})?$').hasMatch(value)) {
+          return 'Pokemon health value must be between 0 and 100';
+        }
+      },
       onSaved: (String value) {
         setState(() {
           _startingHealth = double.parse(value);
