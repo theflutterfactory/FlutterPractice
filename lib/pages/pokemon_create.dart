@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../ui/button_dark.dart';
+import '../data/pokemon.dart';
 
 class PokemonCreatePage extends StatefulWidget {
-  final Function addProduct;
+  final Function addPokemon;
 
-  PokemonCreatePage(this.addProduct);
+  PokemonCreatePage(this.addPokemon);
 
   @override
   State<StatefulWidget> createState() {
@@ -14,10 +15,7 @@ class PokemonCreatePage extends StatefulWidget {
 }
 
 class _PokemonCreatePageState extends State<PokemonCreatePage> {
-  String _name = '';
-  String _description = '';
-  String _type = '';
-  double _startingHealth;
+  Pokemon pokemon = new Pokemon();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _submitPokemon() {
@@ -27,16 +25,8 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
 
     _formKey.currentState.save();
 
-    final Map<String, dynamic> pokmeon = {
-      'name': _name,
-      'description': _description,
-      'type': _type,
-      'startingHealth': _startingHealth,
-      'image': 'assets/pikachu.png'
-    };
-
-    Navigator.pushReplacementNamed(context, '/pokemon');
-    widget.addProduct(pokmeon);
+    Navigator.pushReplacementNamed(context, '/pokemon_feed');
+    widget.addPokemon(pokemon);
   }
 
   Widget _buildNameField() {
@@ -52,9 +42,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         }
       },
       onSaved: (String value) {
-        setState(() {
-          _name = value;
-        });
+        pokemon.name = value;
       },
     );
   }
@@ -73,9 +61,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         }
       },
       onSaved: (String value) {
-        setState(() {
-          _description = value;
-        });
+        pokemon.description = value;
       },
     );
   }
@@ -93,9 +79,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         }
       },
       onSaved: (String value) {
-        setState(() {
-          _type = value;
-        });
+        pokemon.type = value;
       },
     );
   }
@@ -114,9 +98,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         }
       },
       onSaved: (String value) {
-        setState(() {
-          _startingHealth = double.parse(value);
-        });
+        pokemon.startingHealth = double.parse(value);
       },
     );
   }

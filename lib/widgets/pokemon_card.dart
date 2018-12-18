@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../ui/button_dark.dart';
+import '../data/pokemon.dart';
 
 class PokemonCard extends StatelessWidget {
-  final Map<String, dynamic> pokemon;
+  final Pokemon pokemon;
   final int pokemonIndex;
 
   PokemonCard(this.pokemon, this.pokemonIndex);
@@ -20,10 +21,10 @@ class PokemonCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              pokemon['name'],
+              pokemon.name,
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),
-            Image.asset(pokemon['image'], height: 150),
+            Image.asset(pokemon.image, height: 150),
             ButtonBar(
               alignment: MainAxisAlignment.center,
               children: <Widget>[

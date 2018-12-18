@@ -4,6 +4,7 @@ import './pages/auth.dart';
 import './pages/pokemon_admin.dart';
 import './pages/pokemon_feed.dart';
 import './pages/pokemon_detail.dart';
+import './data/pokemon.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,9 +16,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, dynamic>> _pokemonList = [];
+  List<Pokemon> _pokemonList = [];
 
-  void _addPokemon(Map<String, dynamic> pokemon) {
+  void _addPokemon(Pokemon pokemon) {
     setState(() {
       _pokemonList.add(pokemon);
     });
@@ -49,9 +50,9 @@ class _MyAppState extends State<MyApp> {
           final int index = int.parse(pathElements[2]);
           return MaterialPageRoute<bool>(
             builder: (context) => PokemonDetail(
-                  _pokemonList[index]['name'],
-                  _pokemonList[index]['image'],
-                  _pokemonList[index]['description'],
+                  _pokemonList[index].name,
+                  _pokemonList[index].image,
+                  _pokemonList[index].description,
                 ),
           );
         }
