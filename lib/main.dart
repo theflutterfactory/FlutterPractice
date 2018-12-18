@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import './pages/auth.dart';
 import './pages/pokemon_admin.dart';
-import './pages/pokemon.dart';
+import './pages/pokemon_feed.dart';
 import './pages/pokemon_detail.dart';
 
 void main() => runApp(MyApp());
@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primarySwatch: Colors.red, accentColor: Colors.purple),
       home: AuthPage(),
       routes: {
-        '/pokemon': (context) => Pokemon(_pokemonList),
+        '/pokemon_feed': (context) => PokemonFeed(_pokemonList),
         '/admin': (context) => PokemonAdminPage(_addPokemon, _deletePokemon),
       },
       onGenerateRoute: (RouteSettings settings) {
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       },
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(
-          builder: (context) => Pokemon(_pokemonList),
+          builder: (context) => PokemonFeed(_pokemonList),
         );
       },
     );

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../widgets/pokemon_list.dart';
 
-class Pokemon extends StatelessWidget {
+class PokemonFeed extends StatelessWidget {
   final List<Map<String, dynamic>> pokemonList;
 
-  Pokemon(this.pokemonList);
+  PokemonFeed(this.pokemonList);
 
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(

@@ -21,7 +21,7 @@ class PokemonAdminPage extends StatelessWidget {
             leading: Icon(Icons.people),
             title: Text('All Pokemon'),
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/pokemon');
+              Navigator.pushReplacementNamed(context, '/pokemon_feed');
             },
           )
         ],

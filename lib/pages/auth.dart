@@ -15,7 +15,7 @@ class _AuthPageState extends State<AuthPage> {
   bool _acceptTerms = false;
 
   void _login() {
-    Navigator.pushReplacementNamed(context, '/pokemon');
+    Navigator.pushReplacementNamed(context, '/pokemon_feed');
   }
 
   @override
