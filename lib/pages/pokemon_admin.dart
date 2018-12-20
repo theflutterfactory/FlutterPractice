@@ -54,7 +54,7 @@ class PokemonAdminPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            PokemonCreatePage(addPokemon),
+            PokemonCreatePage(addPokemon: addPokemon),
             PokemonOwnedPage(pokemonList),
           ],
         ),

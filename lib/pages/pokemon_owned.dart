@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './pokemon_create.dart';
 import '../data/pokemon.dart';
 
 class PokemonOwnedPage extends StatelessWidget {
@@ -20,7 +21,13 @@ class PokemonOwnedPage extends StatelessWidget {
           title: Text(pokemonList[index].name),
           trailing: IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (BuildContext context) {
+                  return PokemonCreatePage(pokemon: pokemonList[index]);
+                }),
+              );
+            },
           ),
         );
       },

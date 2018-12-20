@@ -5,8 +5,10 @@ import '../data/pokemon.dart';
 
 class PokemonCreatePage extends StatefulWidget {
   final Function addPokemon;
+  final Function updatePokemon;
+  final Pokemon pokemon;
 
-  PokemonCreatePage(this.addPokemon);
+  PokemonCreatePage({this.addPokemon, this.updatePokemon, this.pokemon});
 
   @override
   State<StatefulWidget> createState() {
@@ -15,7 +17,7 @@ class PokemonCreatePage extends StatefulWidget {
 }
 
 class _PokemonCreatePageState extends State<PokemonCreatePage> {
-  Pokemon pokemon = new Pokemon();
+  final Pokemon _pokemon = new Pokemon();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _submitPokemon() {
@@ -26,7 +28,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     _formKey.currentState.save();
 
     Navigator.pushReplacementNamed(context, '/pokemon_feed');
-    widget.addPokemon(pokemon);
+    widget.addPokemon(_pokemon);
   }
 
   Widget _buildNameField() {
@@ -42,7 +44,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         }
       },
       onSaved: (String value) {
-        pokemon.name = value;
+        _pokemon.name = value;
       },
     );
   }
@@ -61,7 +63,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         }
       },
       onSaved: (String value) {
-        pokemon.description = value;
+        _pokemon.description = value;
       },
     );
   }
@@ -79,7 +81,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         }
       },
       onSaved: (String value) {
-        pokemon.type = value;
+        _pokemon.type = value;
       },
     );
   }
@@ -98,14 +100,14 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         }
       },
       onSaved: (String value) {
-        pokemon.startingHealth = double.parse(value);
+        _pokemon.startingHealth = double.parse(value);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final Widget pageContent = Container(
       margin: EdgeInsets.all(16),
       child: Form(
         key: _formKey,
@@ -121,5 +123,12 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         ),
       ),
     );
+
+    return widget.pokemon == null
+        ? pageContent
+        : Scaffold(
+            appBar: AppBar(title: Text("Edit Pokemon")),
+            body: pageContent,
+          );
   }
 }
