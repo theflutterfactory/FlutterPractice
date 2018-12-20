@@ -13,31 +13,36 @@ class PokemonOwnedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: <Widget>[
-            ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(pokemonList[index].image),
+        return Dismissible(
+          key: Key(pokemonList[index].name),
+          background: Container(color: Colors.red),
+          secondaryBackground: Container(color: Colors.green),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage(pokemonList[index].image),
+                ),
+                title: Text(pokemonList[index].name),
+                subtitle: Text('Health: ${pokemonList[index].startingHealth.toString()}'),
+                trailing: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return PokemonCreatePage(
+                          pokemon: pokemonList[index],
+                          updatePokemon: updatePokemon,
+                          pokemonIndex: index,
+                        );
+                      }),
+                    );
+                  },
+                ),
               ),
-              title: Text(pokemonList[index].name),
-              subtitle: Text('Health: ${pokemonList[index].startingHealth.toString()}'),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (BuildContext context) {
-                      return PokemonCreatePage(
-                        pokemon: pokemonList[index],
-                        updatePokemon: updatePokemon,
-                        pokemonIndex: index,
-                      );
-                    }),
-                  );
-                },
-              ),
-            ),
-            Divider()
-          ],
+              Divider()
+            ],
+          ),
         );
       },
       itemCount: pokemonList.length,
