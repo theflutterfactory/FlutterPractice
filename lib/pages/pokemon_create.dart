@@ -115,9 +115,8 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final Widget pageContent = Container(
+  Widget _buildPageContent() {
+    return Container(
       margin: EdgeInsets.all(16),
       child: Form(
         key: _formKey,
@@ -133,6 +132,11 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget pageContent = _buildPageContent();
 
     return widget.pokemon == null
         ? pageContent

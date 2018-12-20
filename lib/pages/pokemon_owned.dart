@@ -10,6 +10,23 @@ class PokemonOwnedPage extends StatelessWidget {
 
   PokemonOwnedPage(this.pokemonList, this.updatePokemon, this.deletePokemon);
 
+  Widget _buildEditButton(BuildContext context, int index) {
+    return IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) {
+            return PokemonCreatePage(
+              pokemon: pokemonList[index],
+              updatePokemon: updatePokemon,
+              pokemonIndex: index,
+            );
+          }),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -29,20 +46,7 @@ class PokemonOwnedPage extends StatelessWidget {
                 ),
                 title: Text(pokemonList[index].name),
                 subtitle: Text('Health: ${pokemonList[index].startingHealth.toString()}'),
-                trailing: IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return PokemonCreatePage(
-                          pokemon: pokemonList[index],
-                          updatePokemon: updatePokemon,
-                          pokemonIndex: index,
-                        );
-                      }),
-                    );
-                  },
-                ),
+                trailing: _buildEditButton(context, index),
               ),
               Divider()
             ],
