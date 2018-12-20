@@ -13,27 +13,31 @@ class PokemonOwnedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          contentPadding: EdgeInsets.all(16),
-          leading: Image.asset(
-            pokemonList[index].image,
-            height: 80,
-          ),
-          title: Text(pokemonList[index].name),
-          trailing: IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return PokemonCreatePage(
-                    pokemon: pokemonList[index],
-                    updatePokemon: updatePokemon,
-                    pokemonIndex: index,
+        return Column(
+          children: <Widget>[
+            ListTile(
+              leading: CircleAvatar(
+                backgroundImage: AssetImage(pokemonList[index].image),
+              ),
+              title: Text(pokemonList[index].name),
+              subtitle: Text('Health: ${pokemonList[index].startingHealth.toString()}'),
+              trailing: IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return PokemonCreatePage(
+                        pokemon: pokemonList[index],
+                        updatePokemon: updatePokemon,
+                        pokemonIndex: index,
+                      );
+                    }),
                   );
-                }),
-              );
-            },
-          ),
+                },
+              ),
+            ),
+            Divider()
+          ],
         );
       },
       itemCount: pokemonList.length,
