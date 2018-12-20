@@ -5,9 +5,10 @@ import '../data/pokemon.dart';
 
 class PokemonOwnedPage extends StatelessWidget {
   final Function updatePokemon;
+  final Function deletePokemon;
   final List<Pokemon> pokemonList;
 
-  PokemonOwnedPage(this.pokemonList, this.updatePokemon);
+  PokemonOwnedPage(this.pokemonList, this.updatePokemon, this.deletePokemon);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +16,11 @@ class PokemonOwnedPage extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return Dismissible(
           key: Key(pokemonList[index].name),
+          direction: DismissDirection.endToStart,
+          onDismissed: (DismissDirection direction) {
+            deletePokemon(index);
+          },
           background: Container(color: Colors.red),
-          secondaryBackground: Container(color: Colors.green),
           child: Column(
             children: <Widget>[
               ListTile(
