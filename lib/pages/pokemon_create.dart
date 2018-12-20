@@ -34,6 +34,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   Widget _buildNameField() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Name'),
+      initialValue: widget.pokemon == null ? '' : widget.pokemon.name,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Pokemon name is required';
@@ -53,6 +54,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     return TextFormField(
       maxLines: 4,
       decoration: InputDecoration(labelText: 'Description'),
+      initialValue: widget.pokemon == null ? '' : widget.pokemon.description,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Pokemon description is required';
@@ -71,6 +73,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   Widget _buildTypeField() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Type'),
+      initialValue: widget.pokemon == null ? '' : widget.pokemon.type,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Pokemon type is required';
@@ -90,6 +93,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: 'Starting Health'),
+      initialValue: widget.pokemon == null ? '' : widget.pokemon.startingHealth.toString(),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Pokemon starting health is required';
