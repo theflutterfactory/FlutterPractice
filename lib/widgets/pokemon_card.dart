@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../ui/button_dark.dart';
-import '../data/pokemon.dart';
+import '../models/pokemon.dart';
 
 class PokemonCard extends StatelessWidget {
   final Pokemon pokemon;

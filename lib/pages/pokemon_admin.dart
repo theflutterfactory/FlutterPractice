@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import './pokemon_create.dart';
 import './pokemon_owned.dart';
-import '../data/pokemon.dart';
+import '../models/pokemon.dart';
 
 class PokemonAdminPage extends StatelessWidget {
   final Function addPokemon;

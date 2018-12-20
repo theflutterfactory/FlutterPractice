@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../ui/button_dark.dart';
-import '../data/authInfo.dart';
+import '../models/authInfo.dart';
 
 class AuthPage extends StatefulWidget {
   @override

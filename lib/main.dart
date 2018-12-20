@@ -4,7 +4,7 @@ import './pages/auth.dart';
 import './pages/pokemon_admin.dart';
 import './pages/pokemon_feed.dart';
 import './pages/pokemon_detail.dart';
-import './data/pokemon.dart';
+import './models/pokemon.dart';
 
 void main() => runApp(MyApp());
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './pokemon_create.dart';
-import '../data/pokemon.dart';
+import '../models/pokemon.dart';
 
 class PokemonOwnedPage extends StatelessWidget {
   final Function updatePokemon;
