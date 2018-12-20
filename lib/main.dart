@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       home: AuthPage(),
       routes: {
         '/pokemon_feed': (context) => PokemonFeed(_pokemonList),
-        '/admin': (context) => PokemonAdminPage(_addPokemon, _deletePokemon),
+        '/admin': (context) => PokemonAdminPage(_addPokemon, _deletePokemon, _pokemonList),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
