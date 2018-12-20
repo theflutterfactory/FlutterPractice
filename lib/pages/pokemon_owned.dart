@@ -4,9 +4,10 @@ import './pokemon_create.dart';
 import '../data/pokemon.dart';
 
 class PokemonOwnedPage extends StatelessWidget {
+  final Function updatePokemon;
   final List<Pokemon> pokemonList;
 
-  PokemonOwnedPage(this.pokemonList);
+  PokemonOwnedPage(this.pokemonList, this.updatePokemon);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,11 @@ class PokemonOwnedPage extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (BuildContext context) {
-                  return PokemonCreatePage(pokemon: pokemonList[index]);
+                  return PokemonCreatePage(
+                    pokemon: pokemonList[index],
+                    updatePokemon: updatePokemon,
+                    pokemonIndex: index,
+                  );
                 }),
               );
             },

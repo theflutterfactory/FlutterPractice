@@ -7,8 +7,9 @@ class PokemonCreatePage extends StatefulWidget {
   final Function addPokemon;
   final Function updatePokemon;
   final Pokemon pokemon;
+  final int pokemonIndex;
 
-  PokemonCreatePage({this.addPokemon, this.updatePokemon, this.pokemon});
+  PokemonCreatePage({this.addPokemon, this.updatePokemon, this.pokemon, this.pokemonIndex});
 
   @override
   State<StatefulWidget> createState() {
@@ -27,8 +28,13 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
 
     _formKey.currentState.save();
 
+    if (widget.pokemon == null) {
+      widget.addPokemon(_pokemon);
+    } else {
+      widget.updatePokemon(_pokemon, widget.pokemonIndex);
+    }
+
     Navigator.pushReplacementNamed(context, '/pokemon_feed');
-    widget.addPokemon(_pokemon);
   }
 
   Widget _buildNameField() {

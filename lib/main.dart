@@ -24,6 +24,12 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _updatePokemon(Pokemon pokemon, index) {
+    setState(() {
+      _pokemonList[index] = pokemon;
+    });
+  }
+
   void _deletePokemon(int index) {
     setState(() {
       _pokemonList.removeAt(index);
@@ -37,7 +43,8 @@ class _MyAppState extends State<MyApp> {
       home: AuthPage(),
       routes: {
         '/pokemon_feed': (context) => PokemonFeed(_pokemonList),
-        '/admin': (context) => PokemonAdminPage(_addPokemon, _deletePokemon, _pokemonList),
+        '/admin': (context) =>
+            PokemonAdminPage(_addPokemon, _updatePokemon, _deletePokemon, _pokemonList),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
