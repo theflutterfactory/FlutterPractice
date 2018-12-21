@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import '../ui/button_dark.dart';
 import '../models/pokemon.dart';
+import '../scoped-models/pokemon.dart';
 
 class PokemonCreatePage extends StatefulWidget {
   final Function addPokemon;
@@ -21,7 +23,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   final Pokemon _pokemon = new Pokemon();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _submitPokemon() {
+  void _submitPokemon(Function addPokemon, Function updatePokemon) {
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -29,9 +31,9 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     _formKey.currentState.save();
 
     if (widget.pokemon == null) {
-      widget.addPokemon(_pokemon);
+      addPokemon(_pokemon);
     } else {
-      widget.updatePokemon(_pokemon, widget.pokemonIndex);
+      updatePokemon(_pokemon, widget.pokemonIndex);
     }
 
     Navigator.pushReplacementNamed(context, '/pokemon_feed');
@@ -115,6 +117,14 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     );
   }
 
+  Widget _buildSubmitButton() {
+    return ScopedModelDescendant<PokemonModel>(
+      builder: (BuildContext context, Widget child, PokemonModel model) {
+        return DarkButton('SAVE', () => _submitPokemon(model.addPokemon, model.updatePokemon));
+      },
+    );
+  }
+
   Widget _buildPageContent() {
     return Container(
       margin: EdgeInsets.all(16),
@@ -127,7 +137,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
             _buildTypeField(),
             _buildHealthField(),
             SizedBox(height: 16),
-            DarkButton('SAVE', _submitPokemon),
+            _buildSubmitButton()
           ],
         ),
       ),

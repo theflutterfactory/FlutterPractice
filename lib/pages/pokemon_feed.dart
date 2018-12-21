@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/pokemon_list.dart';
-import '../models/pokemon.dart';
 
 class PokemonFeed extends StatelessWidget {
-  final List<Pokemon> pokemonList;
-
-  PokemonFeed(this.pokemonList);
-
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
       child: Column(
@@ -35,7 +30,7 @@ class PokemonFeed extends StatelessWidget {
       appBar: AppBar(
         title: Text("Pokemon"),
       ),
-      body: PokemonList(pokemonList),
+      body: PokemonList(),
     );
   }
 }

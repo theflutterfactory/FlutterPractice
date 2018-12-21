@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import './pokemon_card.dart';
 import '../models/pokemon.dart';
+import '../scoped-models/pokemon.dart';
 
 class PokemonList extends StatelessWidget {
-  final List<Pokemon> pokemonList;
-
-  PokemonList(this.pokemonList);
-
-  Widget _buildPokemonList() {
+  Widget _buildPokemonList(List<Pokemon> pokemonList) {
     Widget pokemonCard = Center(
       child: Text("No Pokemon found, Go ahead and add one"),
     );
@@ -24,6 +22,9 @@ class PokemonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildPokemonList();
+    return ScopedModelDescendant<PokemonModel>(
+        builder: (BuildContext context, Widget child, PokemonModel model) {
+      return _buildPokemonList(model.pokemon);
+    });
   }
 }

@@ -5,13 +5,6 @@ import './pokemon_owned.dart';
 import '../models/pokemon.dart';
 
 class PokemonAdminPage extends StatelessWidget {
-  final Function addPokemon;
-  final Function updatePokemon;
-  final Function deletePokemon;
-  final List<Pokemon> pokemonList;
-
-  PokemonAdminPage(this.addPokemon, this.updatePokemon, this.deletePokemon, this.pokemonList);
-
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
       child: Column(
@@ -55,8 +48,8 @@ class PokemonAdminPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            PokemonCreatePage(addPokemon: addPokemon),
-            PokemonOwnedPage(pokemonList, updatePokemon, deletePokemon),
+            PokemonCreatePage(),
+            PokemonOwnedPage(null, null, null),
           ],
         ),
       ),
