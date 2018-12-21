@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           if (pathElements[1] == 'pokemon') {
             final int index = int.parse(pathElements[2]);
             return MaterialPageRoute<bool>(
-              builder: (context) => PokemonDetail(null, null, null),
+              builder: (context) => PokemonDetail(index),
             );
           }
 

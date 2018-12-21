@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import '../ui/button_dark.dart';
+import '../scoped-models/pokemon.dart';
+import '../models/pokemon.dart';
 
 class PokemonDetail extends StatelessWidget {
-  final String name;
-  final String imageUrl;
-  final String description;
+  final int pokemonIndex;
 
-  PokemonDetail(this.name, this.imageUrl, this.description);
+  PokemonDetail(this.pokemonIndex);
 
   _showWarningDialog(BuildContext context) {
     showDialog(
@@ -42,27 +43,33 @@ class PokemonDetail extends StatelessWidget {
         Navigator.pop(context, false);
         return Future.value(false);
       },
-      child: Scaffold(
-        appBar: AppBar(title: Text(name)),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Image.asset(imageUrl, height: 200),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                description,
-                style: TextStyle(fontSize: 18),
-              ),
+      child: ScopedModelDescendant<PokemonModel>(
+        builder: (BuildContext context, Widget child, PokemonModel model) {
+          final Pokemon _pokemon = model.pokemon[pokemonIndex];
+
+          return Scaffold(
+            appBar: AppBar(title: Text(_pokemon.name)),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Image.asset(_pokemon.image, height: 200),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    _pokemon.description,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                SizedBox(height: 32),
+                Flex(
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[DarkButton('DELETE', () => _showWarningDialog(context))],
+                ),
+              ],
             ),
-            SizedBox(height: 32),
-            Flex(
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[DarkButton('DELETE', () => _showWarningDialog(context))],
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
