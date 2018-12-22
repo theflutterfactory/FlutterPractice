@@ -45,7 +45,7 @@ class PokemonDetail extends StatelessWidget {
       },
       child: ScopedModelDescendant<PokemonModel>(
         builder: (BuildContext context, Widget child, PokemonModel model) {
-          final Pokemon _pokemon = model.pokemon[pokemonIndex];
+          final Pokemon _pokemon = model.pokemonList[pokemonIndex];
 
           return Scaffold(
             appBar: AppBar(title: Text(_pokemon.name)),

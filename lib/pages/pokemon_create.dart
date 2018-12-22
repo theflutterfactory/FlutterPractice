@@ -6,13 +6,6 @@ import '../models/pokemon.dart';
 import '../scoped-models/pokemon.dart';
 
 class PokemonCreatePage extends StatefulWidget {
-  final Function addPokemon;
-  final Function updatePokemon;
-  final Pokemon pokemon;
-  final int pokemonIndex;
-
-  PokemonCreatePage({this.addPokemon, this.updatePokemon, this.pokemon, this.pokemonIndex});
-
   @override
   State<StatefulWidget> createState() {
     return _PokemonCreatePageState();
@@ -23,26 +16,26 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   final Pokemon _pokemon = new Pokemon();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _submitPokemon(Function addPokemon, Function updatePokemon) {
+  void _submitPokemon(PokemonModel pokemonModel) {
     if (!_formKey.currentState.validate()) {
       return;
     }
 
     _formKey.currentState.save();
 
-    if (widget.pokemon == null) {
-      addPokemon(_pokemon);
+    if (pokemonModel.selectedPokemonIndex == null) {
+      pokemonModel.addPokemon(_pokemon);
     } else {
-      updatePokemon(_pokemon, widget.pokemonIndex);
+      pokemonModel.updatePokemon(_pokemon);
     }
 
     Navigator.pushReplacementNamed(context, '/pokemon_feed');
   }
 
-  Widget _buildNameField() {
+  Widget _buildNameField(Pokemon pokemon) {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Name'),
-      initialValue: widget.pokemon == null ? '' : widget.pokemon.name,
+      initialValue: pokemon == null ? '' : pokemon.name,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Pokemon name is required';
@@ -58,11 +51,11 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     );
   }
 
-  Widget _buildDescriptionField() {
+  Widget _buildDescriptionField(Pokemon pokemon) {
     return TextFormField(
       maxLines: 4,
       decoration: InputDecoration(labelText: 'Description'),
-      initialValue: widget.pokemon == null ? '' : widget.pokemon.description,
+      initialValue: pokemon == null ? '' : pokemon.description,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Pokemon description is required';
@@ -78,10 +71,10 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     );
   }
 
-  Widget _buildTypeField() {
+  Widget _buildTypeField(Pokemon pokemon) {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Type'),
-      initialValue: widget.pokemon == null ? '' : widget.pokemon.type,
+      initialValue: pokemon == null ? '' : pokemon.type,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Pokemon type is required';
@@ -97,11 +90,11 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     );
   }
 
-  Widget _buildHealthField() {
+  Widget _buildHealthField(Pokemon pokemon) {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: 'Starting Health'),
-      initialValue: widget.pokemon == null ? '' : widget.pokemon.startingHealth.toString(),
+      initialValue: pokemon == null ? '' : pokemon.startingHealth.toString(),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Pokemon starting health is required';
@@ -120,22 +113,22 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   Widget _buildSubmitButton() {
     return ScopedModelDescendant<PokemonModel>(
       builder: (BuildContext context, Widget child, PokemonModel model) {
-        return DarkButton('SAVE', () => _submitPokemon(model.addPokemon, model.updatePokemon));
+        return DarkButton('SAVE', () => _submitPokemon(model));
       },
     );
   }
 
-  Widget _buildPageContent() {
+  Widget _buildPageContent(Pokemon pokemon) {
     return Container(
       margin: EdgeInsets.all(16),
       child: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
-            _buildNameField(),
-            _buildDescriptionField(),
-            _buildTypeField(),
-            _buildHealthField(),
+            _buildNameField(pokemon),
+            _buildDescriptionField(pokemon),
+            _buildTypeField(pokemon),
+            _buildHealthField(pokemon),
             SizedBox(height: 16),
             _buildSubmitButton()
           ],
@@ -146,13 +139,17 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Widget pageContent = _buildPageContent();
+    return ScopedModelDescendant<PokemonModel>(
+      builder: (BuildContext context, Widget child, PokemonModel model) {
+        final Widget pageContent = _buildPageContent(model.selectedPokemon);
 
-    return widget.pokemon == null
-        ? pageContent
-        : Scaffold(
-            appBar: AppBar(title: Text("Edit Pokemon")),
-            body: pageContent,
-          );
+        return model.selectedPokemonIndex == null
+            ? pageContent
+            : Scaffold(
+                appBar: AppBar(title: Text("Edit Pokemon")),
+                body: pageContent,
+              );
+      },
+    );
   }
 }
