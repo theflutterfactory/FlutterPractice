@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
-import '../ui/button_dark.dart';
 import '../models/pokemon.dart';
+import '../scoped-models/pokemon.dart';
 
 class PokemonCard extends StatelessWidget {
   final Pokemon pokemon;
@@ -26,12 +27,31 @@ class PokemonCard extends StatelessWidget {
             ),
             Image.asset(pokemon.image, height: 150),
             ButtonBar(
-              alignment: MainAxisAlignment.center,
+              alignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                DarkButton(
-                    'DETAILS',
-                    () =>
-                        Navigator.pushNamed<bool>(context, '/pokemon/' + pokemonIndex.toString())),
+                IconButton(
+                  icon: Icon(Icons.description),
+                  color: Colors.white,
+                  onPressed: () =>
+                      Navigator.pushNamed<bool>(context, '/pokemon/' + pokemonIndex.toString()),
+                ),
+                ScopedModelDescendant<PokemonModel>(
+                  builder: (BuildContext context, Widget child, PokemonModel model) {
+                    print("pokemonList: " + model.pokemonList.length.toString());
+                    print("index: " + pokemonIndex.toString());
+
+                    return IconButton(
+                      icon: Icon(model.pokemonList[pokemonIndex].isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border),
+                      color: Colors.white,
+                      onPressed: () {
+                        model.selectPokemon(pokemonIndex);
+                        model.toggleFavorite();
+                      },
+                    );
+                  },
+                )
               ],
             )
           ],

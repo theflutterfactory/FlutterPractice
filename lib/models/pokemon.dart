@@ -4,8 +4,7 @@ class Pokemon {
   String type;
   double startingHealth;
   String image = 'assets/pikachu.png';
+  bool isFavorite = false;
 
   Pokemon();
-
-  Pokemon.create(this.name, this.description, this.type, this.startingHealth, this.image);
 }

@@ -33,6 +33,21 @@ class PokemonModel extends Model {
     _selectedPokemonIndex = null;
   }
 
+  void toggleFavorite() {
+    final bool isFavorite = selectedPokemon.isFavorite;
+    final bool newFavoriteStatus = !isFavorite;
+    final Pokemon updatedPokemon = Pokemon();
+    updatedPokemon.name = selectedPokemon.name;
+    updatedPokemon.description = selectedPokemon.description;
+    updatedPokemon.startingHealth = selectedPokemon.startingHealth;
+    updatedPokemon.image = selectedPokemon.image;
+    updatedPokemon.type = selectedPokemon.type;
+    updatedPokemon.isFavorite = newFavoriteStatus;
+
+    _pokemonList[_selectedPokemonIndex] = updatedPokemon;
+    _selectedPokemonIndex = null;
+  }
+
   void selectPokemon(int index) {
     _selectedPokemonIndex = index;
   }
