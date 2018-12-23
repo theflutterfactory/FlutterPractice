@@ -1,51 +1,44 @@
 import 'package:scoped_model/scoped_model.dart';
 
 import '../models/pokemon.dart';
+import 'connected_pokemon.dart';
 
-mixin PokemonModel on Model {
-  List<Pokemon> _pokemonList = [];
-  int _selectedPokemonIndex;
+mixin PokemonModel on ConnectedPokemon {
   bool _showFavorites = false;
 
   List<Pokemon> get pokemonList {
-    return List.from(_pokemonList);
+    return List.from(pokemonList);
   }
 
   List<Pokemon> get displayedPokemon {
     if (_showFavorites) {
-      return List.from(_pokemonList.where((Pokemon pokemon) => pokemon.isFavorite).toList());
+      return List.from(pokemonList.where((Pokemon pokemon) => pokemon.isFavorite).toList());
     }
 
-    return List.from(_pokemonList);
+    return List.from(pokemonList);
   }
 
   int get selectedPokemonIndex {
-    return _selectedPokemonIndex;
+    return selectedPokemonIndex;
   }
 
   Pokemon get selectedPokemon {
-    return _selectedPokemonIndex != null ? _pokemonList[_selectedPokemonIndex] : null;
+    return selectedPokemonIndex != null ? pokemonList[selectedPokemonIndex] : null;
   }
 
   bool get displayFavoritesOnly {
     return _showFavorites;
   }
 
-  void addPokemon(Pokemon pokemon) {
-    _pokemonList.add(pokemon);
-    _selectedPokemonIndex = null;
-    notifyListeners();
-  }
-
   void updatePokemon(Pokemon pokemon) {
-    _pokemonList[_selectedPokemonIndex] = pokemon;
-    _selectedPokemonIndex = null;
+    pokemonList[selectedPokemonIndex] = pokemon;
+    selectedPokemonIndex = null;
     notifyListeners();
   }
 
   void deletePokemon(int index) {
-    _pokemonList.removeAt(_selectedPokemonIndex);
-    _selectedPokemonIndex = null;
+    pokemonList.removeAt(selectedPokemonIndex);
+    selectedPokemonIndex = null;
     notifyListeners();
   }
 
@@ -60,13 +53,13 @@ mixin PokemonModel on Model {
     updatedPokemon.type = selectedPokemon.type;
     updatedPokemon.isFavorite = newFavoriteStatus;
 
-    _pokemonList[_selectedPokemonIndex] = updatedPokemon;
+    pokemonList[selectedPokemonIndex] = updatedPokemon;
     notifyListeners();
-    _selectedPokemonIndex = null;
+    selectedPokemonIndex = null;
   }
 
   void selectPokemon(int index) {
-    _selectedPokemonIndex = index;
+    selectedPokemonIndex = index;
     notifyListeners();
   }
 
