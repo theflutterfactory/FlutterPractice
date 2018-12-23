@@ -21,16 +21,19 @@ class PokemonModel extends Model {
   void addPokemon(Pokemon pokemon) {
     _pokemonList.add(pokemon);
     _selectedPokemonIndex = null;
+    notifyListeners();
   }
 
   void updatePokemon(Pokemon pokemon) {
     _pokemonList[_selectedPokemonIndex] = pokemon;
     _selectedPokemonIndex = null;
+    notifyListeners();
   }
 
   void deletePokemon(int index) {
     _pokemonList.removeAt(_selectedPokemonIndex);
     _selectedPokemonIndex = null;
+    notifyListeners();
   }
 
   void toggleFavorite() {
@@ -46,6 +49,7 @@ class PokemonModel extends Model {
 
     _pokemonList[_selectedPokemonIndex] = updatedPokemon;
     _selectedPokemonIndex = null;
+    notifyListeners();
   }
 
   void selectPokemon(int index) {
