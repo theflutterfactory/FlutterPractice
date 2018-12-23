@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../ui/button_dark.dart';
-import '../models/authInfo.dart';
+import '../models/user.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -11,7 +11,7 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final AuthInfo _authInfo = new AuthInfo();
+  final User _authInfo = new User();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _login() {
