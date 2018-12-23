@@ -29,7 +29,8 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
       mainModel.updatePokemon(_pokemon);
     }
 
-    Navigator.pushReplacementNamed(context, '/pokemon_feed');
+    Navigator.pushReplacementNamed(context, '/pokemon_feed')
+        .then((_) => mainModel.selectPokemon(null));
   }
 
   Widget _buildNameField(Pokemon pokemon) {
