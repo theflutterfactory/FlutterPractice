@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
+import '../scoped-models/pokemon.dart';
 import '../widgets/pokemon_list.dart';
 
 class PokemonFeed extends StatelessWidget {
@@ -29,6 +31,17 @@ class PokemonFeed extends StatelessWidget {
       drawer: _buildSideDrawer(context),
       appBar: AppBar(
         title: Text("Pokemon"),
+        actions: <Widget>[
+          ScopedModelDescendant<PokemonModel>(
+              builder: (BuildContext context, Widget child, PokemonModel model) {
+            return IconButton(
+              icon: Icon(model.displayFavoritesOnly ? Icons.favorite : Icons.favorite_border),
+              onPressed: () {
+                model.toggleDisplayMode();
+              },
+            );
+          })
+        ],
       ),
       body: PokemonList(),
     );

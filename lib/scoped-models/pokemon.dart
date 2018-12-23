@@ -5,8 +5,17 @@ import '../models/pokemon.dart';
 class PokemonModel extends Model {
   List<Pokemon> _pokemonList = [];
   int _selectedPokemonIndex;
+  bool _showFavorites = false;
 
   List<Pokemon> get pokemonList {
+    return List.from(_pokemonList);
+  }
+
+  List<Pokemon> get displayedPokemon {
+    if (_showFavorites) {
+      return List.from(_pokemonList.where((Pokemon pokemon) => pokemon.isFavorite).toList());
+    }
+
     return List.from(_pokemonList);
   }
 
@@ -16,6 +25,10 @@ class PokemonModel extends Model {
 
   Pokemon get selectedPokemon {
     return _selectedPokemonIndex != null ? _pokemonList[_selectedPokemonIndex] : null;
+  }
+
+  bool get displayFavoritesOnly {
+    return _showFavorites;
   }
 
   void addPokemon(Pokemon pokemon) {
@@ -54,5 +67,10 @@ class PokemonModel extends Model {
 
   void selectPokemon(int index) {
     _selectedPokemonIndex = index;
+  }
+
+  void toggleDisplayMode() {
+    _showFavorites = !_showFavorites;
+    notifyListeners();
   }
 }

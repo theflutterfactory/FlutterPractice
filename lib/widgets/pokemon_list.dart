@@ -24,7 +24,7 @@ class PokemonList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<PokemonModel>(
         builder: (BuildContext context, Widget child, PokemonModel model) {
-      return _buildPokemonList(model.pokemonList);
+      return _buildPokemonList(model.displayedPokemon);
     });
   }
 }
