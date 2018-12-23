@@ -1,12 +1,10 @@
-import 'package:scoped_model/scoped_model.dart';
-
 import '../models/pokemon.dart';
 import 'connected_pokemon.dart';
 
 mixin PokemonModel on ConnectedPokemon {
   bool _showFavorites = false;
 
-  List<Pokemon> get pokemonList {
+  List<Pokemon> get allpokemon {
     return List.from(pokemonList);
   }
 
@@ -19,7 +17,7 @@ mixin PokemonModel on ConnectedPokemon {
   }
 
   int get selectedPokemonIndex {
-    return selectedPokemonIndex;
+    return selPokemonIndex;
   }
 
   Pokemon get selectedPokemon {
@@ -30,15 +28,9 @@ mixin PokemonModel on ConnectedPokemon {
     return _showFavorites;
   }
 
-  void updatePokemon(Pokemon pokemon) {
-    pokemonList[selectedPokemonIndex] = pokemon;
-    selectedPokemonIndex = null;
-    notifyListeners();
-  }
-
   void deletePokemon(int index) {
     pokemonList.removeAt(selectedPokemonIndex);
-    selectedPokemonIndex = null;
+    selPokemonIndex = null;
     notifyListeners();
   }
 
@@ -52,14 +44,15 @@ mixin PokemonModel on ConnectedPokemon {
     updatedPokemon.image = selectedPokemon.image;
     updatedPokemon.type = selectedPokemon.type;
     updatedPokemon.isFavorite = newFavoriteStatus;
+    updatedPokemon.user = selectedPokemon.user;
 
     pokemonList[selectedPokemonIndex] = updatedPokemon;
     notifyListeners();
-    selectedPokemonIndex = null;
+    selPokemonIndex = null;
   }
 
   void selectPokemon(int index) {
-    selectedPokemonIndex = index;
+    selPokemonIndex = index;
     notifyListeners();
   }
 

@@ -26,6 +26,7 @@ class PokemonCard extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),
             Image.asset(pokemon.image, height: 150),
+            Text(pokemon.user.email, style: TextStyle(color: Colors.white, fontSize: 16)),
             ButtonBar(
               alignment: MainAxisAlignment.spaceAround,
               children: <Widget>[

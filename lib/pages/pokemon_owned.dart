@@ -21,7 +21,7 @@ class PokemonOwnedPage extends StatelessWidget {
 
   Widget _buildPokemonListItem(BuildContext context, MainModel model, int index) {
     return Dismissible(
-      key: Key(model.pokemonList[index].name),
+      key: Key(model.allpokemon[index].name),
       direction: DismissDirection.endToStart,
       onDismissed: (DismissDirection direction) {
         model.deletePokemon(index);
@@ -31,10 +31,10 @@ class PokemonOwnedPage extends StatelessWidget {
         children: <Widget>[
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: AssetImage(model.pokemonList[index].image),
+              backgroundImage: AssetImage(model.allpokemon[index].image),
             ),
-            title: Text(model.pokemonList[index].name),
-            subtitle: Text('Health: ${model.pokemonList[index].startingHealth.toString()}'),
+            title: Text(model.allpokemon[index].name),
+            subtitle: Text('Health: ${model.allpokemon[index].startingHealth.toString()}'),
             trailing: _buildEditButton(context, model, index),
           ),
           Divider()
@@ -51,7 +51,7 @@ class PokemonOwnedPage extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return _buildPokemonListItem(context, model, index);
           },
-          itemCount: model.pokemonList.length,
+          itemCount: model.allpokemon.length,
         );
       },
     );

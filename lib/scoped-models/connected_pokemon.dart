@@ -6,13 +6,21 @@ import '../models/user.dart';
 mixin ConnectedPokemon on Model {
   List<Pokemon> pokemonList = [];
   User authenticatedUser;
-  int selectedPokemonIndex;
+  int selPokemonIndex;
 
   void addPokemon(Pokemon pokemon) {
     pokemon.user = authenticatedUser;
 
     pokemonList.add(pokemon);
-    selectedPokemonIndex = null;
+    selPokemonIndex = null;
+    notifyListeners();
+  }
+
+  void updatePokemon(Pokemon pokemon) {
+    pokemon.user = authenticatedUser;
+
+    pokemonList[selPokemonIndex] = pokemon;
+    selPokemonIndex = null;
     notifyListeners();
   }
 }

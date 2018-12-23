@@ -1,5 +1,3 @@
-import 'package:scoped_model/scoped_model.dart';
-
 import '../models/user.dart';
 import 'connected_pokemon.dart';
 
