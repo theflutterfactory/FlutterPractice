@@ -12,7 +12,6 @@ mixin ConnectedPokemonModel on Model {
     pokemon.user = _authenticatedUser;
 
     _pokemonList.add(pokemon);
-    _selPokemonIndex = null;
     notifyListeners();
   }
 
@@ -20,7 +19,6 @@ mixin ConnectedPokemonModel on Model {
     pokemon.user = _authenticatedUser;
 
     _pokemonList[_selPokemonIndex] = pokemon;
-    _selPokemonIndex = null;
     notifyListeners();
   }
 }
@@ -54,7 +52,6 @@ mixin PokemonModel on ConnectedPokemonModel {
 
   void deletePokemon(int index) {
     _pokemonList.removeAt(selectedPokemonIndex);
-    _selPokemonIndex = null;
     notifyListeners();
   }
 
@@ -72,7 +69,6 @@ mixin PokemonModel on ConnectedPokemonModel {
 
     _pokemonList[selectedPokemonIndex] = updatedPokemon;
     notifyListeners();
-    _selPokemonIndex = null;
   }
 
   void selectPokemon(int index) {
