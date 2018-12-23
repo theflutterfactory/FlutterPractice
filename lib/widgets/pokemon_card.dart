@@ -39,7 +39,7 @@ class PokemonCard extends StatelessWidget {
                 ScopedModelDescendant<MainModel>(
                   builder: (BuildContext context, Widget child, MainModel model) {
                     return IconButton(
-                      icon: Icon(model.pokemonList[pokemonIndex].isFavorite
+                      icon: Icon(model.allpokemon[pokemonIndex].isFavorite
                           ? Icons.favorite
                           : Icons.favorite_border),
                       color: Colors.white,
