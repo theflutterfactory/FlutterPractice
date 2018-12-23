@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import '../ui/button_dark.dart';
 import '../models/user.dart';
+import '../scoped-models/main.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -11,15 +13,16 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final User _authInfo = new User();
+  final User user = new User();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _login() {
+  void _login(Function login) {
     if (!_formKey.currentState.validate()) {
       return;
     }
 
     _formKey.currentState.save();
+    login(user.email, user.password);
 
     Navigator.pushReplacementNamed(context, '/pokemon_feed');
   }
@@ -40,7 +43,7 @@ class _AuthPageState extends State<AuthPage> {
         }
       },
       onSaved: (String value) {
-        _authInfo.email = value;
+        user.email = value;
       },
     );
   }
@@ -59,17 +62,17 @@ class _AuthPageState extends State<AuthPage> {
         }
       },
       onSaved: (String value) {
-        _authInfo.password = value;
+        user.password = value;
       },
     );
   }
 
   Widget _buildAcceptSwitch() {
     return SwitchListTile(
-      value: _authInfo.acceptTerms,
+      value: user.acceptTerms,
       onChanged: (bool value) {
         setState(() {
-          _authInfo.acceptTerms = value;
+          user.acceptTerms = value;
         });
       },
       title: Text('Accept Terms'),
@@ -99,7 +102,11 @@ class _AuthPageState extends State<AuthPage> {
                 SizedBox(height: 16),
                 _buildAcceptSwitch(),
                 SizedBox(height: 16),
-                DarkButton('LOGIN', _login),
+                ScopedModelDescendant<MainModel>(
+                  builder: (BuildContext context, Widget widget, MainModel model) {
+                    return DarkButton('LOGIN', () => _login(model.login));
+                  },
+                )
               ],
             ),
           ),
