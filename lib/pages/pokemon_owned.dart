@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import './pokemon_create.dart';
-import '../scoped-models/pokemon.dart';
+import '../scoped-models/main.dart';
 
 class PokemonOwnedPage extends StatelessWidget {
-  Widget _buildEditButton(BuildContext context, PokemonModel model, int index) {
+  Widget _buildEditButton(BuildContext context, MainModel model, int index) {
     return IconButton(
       icon: Icon(Icons.edit),
       onPressed: () {
@@ -19,7 +19,7 @@ class PokemonOwnedPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPokemonListItem(BuildContext context, PokemonModel model, int index) {
+  Widget _buildPokemonListItem(BuildContext context, MainModel model, int index) {
     return Dismissible(
       key: Key(model.pokemonList[index].name),
       direction: DismissDirection.endToStart,
@@ -45,8 +45,8 @@ class PokemonOwnedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<PokemonModel>(
-      builder: (BuildContext context, Widget child, PokemonModel model) {
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) {
             return _buildPokemonListItem(context, model, index);

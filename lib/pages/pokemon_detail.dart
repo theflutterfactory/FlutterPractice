@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import '../ui/button_dark.dart';
-import '../scoped-models/pokemon.dart';
+import '../scoped-models/main.dart';
 import '../models/pokemon.dart';
 
 class PokemonDetail extends StatelessWidget {
@@ -43,8 +43,8 @@ class PokemonDetail extends StatelessWidget {
         Navigator.pop(context, false);
         return Future.value(false);
       },
-      child: ScopedModelDescendant<PokemonModel>(
-        builder: (BuildContext context, Widget child, PokemonModel model) {
+      child: ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
           final Pokemon _pokemon = model.pokemonList[pokemonIndex];
 
           return Scaffold(

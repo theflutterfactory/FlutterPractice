@@ -3,7 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../ui/button_dark.dart';
 import '../models/pokemon.dart';
-import '../scoped-models/pokemon.dart';
+import '../scoped-models/main.dart';
 
 class PokemonCreatePage extends StatefulWidget {
   @override
@@ -16,17 +16,17 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   final Pokemon _pokemon = new Pokemon();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _submitPokemon(PokemonModel pokemonModel) {
+  void _submitPokemon(MainModel mainModel) {
     if (!_formKey.currentState.validate()) {
       return;
     }
 
     _formKey.currentState.save();
 
-    if (pokemonModel.selectedPokemonIndex == null) {
-      pokemonModel.addPokemon(_pokemon);
+    if (mainModel.selectedPokemonIndex == null) {
+      mainModel.addPokemon(_pokemon);
     } else {
-      pokemonModel.updatePokemon(_pokemon);
+      mainModel.updatePokemon(_pokemon);
     }
 
     Navigator.pushReplacementNamed(context, '/pokemon_feed');
@@ -110,27 +110,19 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     );
   }
 
-  Widget _buildSubmitButton() {
-    return ScopedModelDescendant<PokemonModel>(
-      builder: (BuildContext context, Widget child, PokemonModel model) {
-        return DarkButton('SAVE', () => _submitPokemon(model));
-      },
-    );
-  }
-
-  Widget _buildPageContent(Pokemon pokemon) {
+  Widget _buildPageContent(MainModel model) {
     return Container(
       margin: EdgeInsets.all(16),
       child: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
-            _buildNameField(pokemon),
-            _buildDescriptionField(pokemon),
-            _buildTypeField(pokemon),
-            _buildHealthField(pokemon),
+            _buildNameField(model.selectedPokemon),
+            _buildDescriptionField(model.selectedPokemon),
+            _buildTypeField(model.selectedPokemon),
+            _buildHealthField(model.selectedPokemon),
             SizedBox(height: 16),
-            _buildSubmitButton()
+            DarkButton('SAVE', () => _submitPokemon(model))
           ],
         ),
       ),
@@ -139,9 +131,9 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<PokemonModel>(
-      builder: (BuildContext context, Widget child, PokemonModel model) {
-        final Widget pageContent = _buildPageContent(model.selectedPokemon);
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        final Widget pageContent = _buildPageContent(model);
 
         return model.selectedPokemonIndex == null
             ? pageContent

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import '../scoped-models/pokemon.dart';
+import '../scoped-models/main.dart';
 import '../widgets/pokemon_list.dart';
 
 class PokemonFeed extends StatelessWidget {
@@ -32,8 +32,8 @@ class PokemonFeed extends StatelessWidget {
       appBar: AppBar(
         title: Text("Pokemon"),
         actions: <Widget>[
-          ScopedModelDescendant<PokemonModel>(
-              builder: (BuildContext context, Widget child, PokemonModel model) {
+          ScopedModelDescendant<MainModel>(
+              builder: (BuildContext context, Widget child, MainModel model) {
             return IconButton(
               icon: Icon(model.displayFavoritesOnly ? Icons.favorite : Icons.favorite_border),
               onPressed: () {

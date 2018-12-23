@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import '../models/pokemon.dart';
-import '../scoped-models/pokemon.dart';
+import '../scoped-models/main.dart';
 
 class PokemonCard extends StatelessWidget {
   final Pokemon pokemon;
@@ -35,11 +35,8 @@ class PokemonCard extends StatelessWidget {
                   onPressed: () =>
                       Navigator.pushNamed<bool>(context, '/pokemon/' + pokemonIndex.toString()),
                 ),
-                ScopedModelDescendant<PokemonModel>(
-                  builder: (BuildContext context, Widget child, PokemonModel model) {
-                    print("pokemonList: " + model.pokemonList.length.toString());
-                    print("index: " + pokemonIndex.toString());
-
+                ScopedModelDescendant<MainModel>(
+                  builder: (BuildContext context, Widget child, MainModel model) {
                     return IconButton(
                       icon: Icon(model.pokemonList[pokemonIndex].isFavorite
                           ? Icons.favorite

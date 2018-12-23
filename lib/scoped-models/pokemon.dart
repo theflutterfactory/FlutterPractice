@@ -2,7 +2,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../models/pokemon.dart';
 
-class PokemonModel extends Model {
+mixin PokemonModel on Model {
   List<Pokemon> _pokemonList = [];
   int _selectedPokemonIndex;
   bool _showFavorites = false;
@@ -61,12 +61,13 @@ class PokemonModel extends Model {
     updatedPokemon.isFavorite = newFavoriteStatus;
 
     _pokemonList[_selectedPokemonIndex] = updatedPokemon;
-    _selectedPokemonIndex = null;
     notifyListeners();
+    _selectedPokemonIndex = null;
   }
 
   void selectPokemon(int index) {
     _selectedPokemonIndex = index;
+    notifyListeners();
   }
 
   void toggleDisplayMode() {

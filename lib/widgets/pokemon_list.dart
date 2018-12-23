@@ -3,7 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 import './pokemon_card.dart';
 import '../models/pokemon.dart';
-import '../scoped-models/pokemon.dart';
+import '../scoped-models/main.dart';
 
 class PokemonList extends StatelessWidget {
   Widget _buildPokemonList(List<Pokemon> pokemonList) {
@@ -22,8 +22,8 @@ class PokemonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<PokemonModel>(
-        builder: (BuildContext context, Widget child, PokemonModel model) {
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
       return _buildPokemonList(model.displayedPokemon);
     });
   }

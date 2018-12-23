@@ -5,7 +5,7 @@ import './pages/auth.dart';
 import './pages/pokemon_admin.dart';
 import './pages/pokemon_feed.dart';
 import './pages/pokemon_detail.dart';
-import './scoped-models/pokemon.dart';
+import './scoped-models/main.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,8 +19,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<PokemonModel>(
-      model: PokemonModel(),
+    return ScopedModel<MainModel>(
+      model: MainModel(),
       child: MaterialApp(
         theme: ThemeData(primarySwatch: Colors.red, accentColor: Colors.purple),
         home: AuthPage(),
