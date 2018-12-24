@@ -1,4 +1,5 @@
 import 'package:scoped_model/scoped_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/pokemon.dart';
 import '../models/user.dart';
@@ -11,8 +12,22 @@ mixin ConnectedPokemonModel on Model {
   void addPokemon(Pokemon pokemon) {
     pokemon.user = _authenticatedUser;
 
-    _pokemonList.add(pokemon);
-    notifyListeners();
+    final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
+
+    Map<String, dynamic> pokemonData = {
+      "name": pokemon.name,
+      "description": pokemon.description,
+      "type": pokemon.type,
+      "health": pokemon.startingHealth,
+      "userEmail": pokemon.user.email,
+      "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
+    };
+
+    pokemonRef.add(pokemonData).then((value) {
+      pokemon.id = value.documentID;
+      _pokemonList.add(pokemon);
+      notifyListeners();
+    });
   }
 
   void updatePokemon(Pokemon pokemon) {

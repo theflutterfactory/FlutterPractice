@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './pages/auth.dart';
 import './pages/pokemon_admin.dart';
@@ -12,6 +13,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
+    Firestore.instance.settings(timestampsInSnapshotsEnabled: true);
     return _MyAppState();
   }
 }

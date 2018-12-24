@@ -1,6 +1,7 @@
 import './user.dart';
 
 class Pokemon {
+  String id;
   String name;
   String description;
   String type;
