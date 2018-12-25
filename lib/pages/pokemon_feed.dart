@@ -4,7 +4,23 @@ import 'package:scoped_model/scoped_model.dart';
 import '../scoped-models/main.dart';
 import '../widgets/pokemon_list.dart';
 
-class PokemonFeed extends StatelessWidget {
+class PokemonFeed extends StatefulWidget {
+  final MainModel model;
+
+  PokemonFeed(this.model);
+  @override
+  State<StatefulWidget> createState() {
+    return _PokemonFeedState();
+  }
+}
+
+class _PokemonFeedState extends State<PokemonFeed> {
+  @override
+  initState() {
+    widget.model.fetchPokemon();
+    super.initState();
+  }
+
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
       child: Column(
@@ -36,9 +52,7 @@ class PokemonFeed extends StatelessWidget {
               builder: (BuildContext context, Widget child, MainModel model) {
             return IconButton(
               icon: Icon(model.displayFavoritesOnly ? Icons.favorite : Icons.favorite_border),
-              onPressed: () {
-                model.toggleDisplayMode();
-              },
+              onPressed: () => model.toggleDisplayMode(),
             );
           })
         ],
