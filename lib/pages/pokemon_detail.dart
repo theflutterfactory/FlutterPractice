@@ -52,7 +52,9 @@ class PokemonDetail extends StatelessWidget {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Image.asset(_pokemon.image, height: 200),
+                SizedBox(height: 16),
+                Image.network(_pokemon.image, height: 200),
+                SizedBox(height: 16),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Text(

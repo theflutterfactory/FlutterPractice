@@ -31,7 +31,7 @@ class PokemonOwnedPage extends StatelessWidget {
         children: <Widget>[
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: AssetImage(model.allpokemon[index].image),
+              backgroundImage: NetworkImage(model.allpokemon[index].image),
             ),
             title: Text(model.allpokemon[index].name),
             subtitle: Text('Health: ${model.allpokemon[index].startingHealth.toString()}'),

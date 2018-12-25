@@ -39,6 +39,7 @@ mixin ConnectedPokemonModel on Model {
         pokemon.name = document['name'];
         pokemon.description = document['description'];
         pokemon.type = document['type'];
+        pokemon.image = document['image'];
         pokemon.userEmail = document['userEmail'];
         pokemon.startingHealth = document['health'];
         _pokemonList.add(pokemon);
