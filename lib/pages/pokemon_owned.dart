@@ -4,16 +4,35 @@ import 'package:scoped_model/scoped_model.dart';
 import './pokemon_create.dart';
 import '../scoped-models/main.dart';
 
-class PokemonOwnedPage extends StatelessWidget {
+class PokemonOwnedPage extends StatefulWidget {
+  final MainModel model;
+
+  PokemonOwnedPage(this.model);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _PokemonOwnedPageState();
+  }
+}
+
+class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
+  @override
+  initState() {
+    widget.model.fetchPokemon();
+    super.initState();
+  }
+
   Widget _buildEditButton(BuildContext context, MainModel model, int index) {
     return IconButton(
       icon: Icon(Icons.edit),
       onPressed: () {
         model.selectPokemon(index);
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) {
-            return PokemonCreatePage();
-          }),
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return PokemonCreatePage();
+            },
+          ),
         );
       },
     );

@@ -21,15 +21,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    final MainModel mainModel = MainModel();
+    final MainModel model = MainModel();
     return ScopedModel<MainModel>(
-      model: mainModel,
+      model: model,
       child: MaterialApp(
         theme: ThemeData(primarySwatch: Colors.red, accentColor: Colors.purple),
         home: AuthPage(),
         routes: {
-          '/pokemon_feed': (context) => PokemonFeed(mainModel),
-          '/admin': (context) => PokemonAdminPage(),
+          '/pokemon_feed': (context) => PokemonFeed(model),
+          '/admin': (context) => PokemonAdminPage(model),
         },
         onGenerateRoute: (RouteSettings settings) {
           final List<String> pathElements = settings.name.split('/');
@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         },
         onUnknownRoute: (RouteSettings settings) {
           return MaterialPageRoute(
-            builder: (context) => PokemonFeed(mainModel),
+            builder: (context) => PokemonFeed(model),
           );
         },
       ),

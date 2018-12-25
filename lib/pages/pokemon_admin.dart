@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 import './pokemon_create.dart';
 import './pokemon_owned.dart';
+import '../scoped-models/main.dart';
 
 class PokemonAdminPage extends StatelessWidget {
+  final MainModel model;
+
+  PokemonAdminPage(this.model);
+
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
       child: Column(
@@ -48,7 +53,7 @@ class PokemonAdminPage extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             PokemonCreatePage(),
-            PokemonOwnedPage(),
+            PokemonOwnedPage(model),
           ],
         ),
       ),
