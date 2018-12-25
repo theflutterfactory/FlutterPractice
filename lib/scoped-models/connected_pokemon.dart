@@ -10,8 +10,10 @@ mixin ConnectedPokemonModel on Model {
   int _selPokemonIndex;
   bool _isLoading = false;
 
-  void addPokemon(Pokemon pokemon) {
+  Future<Null> addPokemon(Pokemon pokemon) {
     _isLoading = true;
+    notifyListeners();
+
     final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
 
     Map<String, dynamic> pokemonData = {
@@ -24,7 +26,7 @@ mixin ConnectedPokemonModel on Model {
       "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
     };
 
-    pokemonRef.add(pokemonData).then((value) {
+    return pokemonRef.add(pokemonData).then((value) {
       _isLoading = false;
       pokemon.id = value.documentID;
       _pokemonList.add(pokemon);
@@ -34,6 +36,8 @@ mixin ConnectedPokemonModel on Model {
 
   void fetchPokemon() {
     _isLoading = true;
+    notifyListeners();
+
     _pokemonList.clear();
 
     final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');

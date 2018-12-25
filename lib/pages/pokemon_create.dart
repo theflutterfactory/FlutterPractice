@@ -16,21 +16,22 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   final Pokemon _pokemon = new Pokemon();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _submitPokemon(MainModel mainModel) {
+  void _showPokemonFeed(MainModel model) {
+    Navigator.pushReplacementNamed(context, '/pokemon_feed').then((_) => model.selectPokemon(null));
+  }
+
+  void _submitPokemon(MainModel model) {
     if (!_formKey.currentState.validate()) {
       return;
     }
 
     _formKey.currentState.save();
 
-    if (mainModel.selectedPokemonIndex == null) {
-      mainModel.addPokemon(_pokemon);
+    if (model.selectedPokemonIndex == null) {
+      model.addPokemon(_pokemon).then((_) => _showPokemonFeed(model));
     } else {
-      mainModel.updatePokemon(_pokemon);
+      model.updatePokemon(_pokemon);
     }
-
-    Navigator.pushReplacementNamed(context, '/pokemon_feed')
-        .then((_) => mainModel.selectPokemon(null));
   }
 
   Widget _buildNameField(Pokemon pokemon) {
@@ -123,7 +124,9 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
             _buildTypeField(model.selectedPokemon),
             _buildHealthField(model.selectedPokemon),
             SizedBox(height: 16),
-            DarkButton('SAVE', () => _submitPokemon(model))
+            model.isLoading
+                ? Center(child: CircularProgressIndicator())
+                : DarkButton('SAVE', () => _submitPokemon(model))
           ],
         ),
       ),
@@ -134,6 +137,10 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
+        if (model.selectedPokemon != null) {
+          print("Selected pokemon?: " + model.selectedPokemon.name);
+        }
+
         final Widget pageContent = _buildPageContent(model);
 
         return model.selectedPokemonIndex == null
