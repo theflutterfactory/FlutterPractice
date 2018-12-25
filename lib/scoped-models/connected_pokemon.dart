@@ -10,8 +10,6 @@ mixin ConnectedPokemonModel on Model {
   int _selPokemonIndex;
 
   void addPokemon(Pokemon pokemon) {
-    pokemon.user = _authenticatedUser;
-
     final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
 
     Map<String, dynamic> pokemonData = {
@@ -19,7 +17,8 @@ mixin ConnectedPokemonModel on Model {
       "description": pokemon.description,
       "type": pokemon.type,
       "health": pokemon.startingHealth,
-      "userEmail": pokemon.user.email,
+      "userEmail": _authenticatedUser.email,
+      "userId": _authenticatedUser.id,
       "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
     };
 
@@ -30,9 +29,26 @@ mixin ConnectedPokemonModel on Model {
     });
   }
 
-  void updatePokemon(Pokemon pokemon) {
-    pokemon.user = _authenticatedUser;
+  void fetchPokemon() {
+    _pokemonList.clear();
+    final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
+    pokemonRef.getDocuments().then((snapshot) {
+      snapshot.documents.map((DocumentSnapshot document) {
+        Pokemon pokemon = new Pokemon();
+        pokemon.id = document.documentID;
+        pokemon.name = document['name'];
+        pokemon.description = document['description'];
+        pokemon.type = document['type'];
+        pokemon.userEmail = document['userEmail'];
+        pokemon.startingHealth = document['health'];
+        _pokemonList.add(pokemon);
+      }).toList();
 
+      notifyListeners();
+    });
+  }
+
+  void updatePokemon(Pokemon pokemon) {
     _pokemonList[_selPokemonIndex] = pokemon;
     notifyListeners();
   }
@@ -79,8 +95,9 @@ mixin PokemonModel on ConnectedPokemonModel {
     updatedPokemon.startingHealth = selectedPokemon.startingHealth;
     updatedPokemon.image = selectedPokemon.image;
     updatedPokemon.type = selectedPokemon.type;
+    updatedPokemon.userEmail = selectedPokemon.userEmail;
+    updatedPokemon.userId = selectedPokemon.userId;
     updatedPokemon.isFavorite = newFavoriteStatus;
-    updatedPokemon.user = selectedPokemon.user;
 
     _pokemonList[selectedPokemonIndex] = updatedPokemon;
     notifyListeners();

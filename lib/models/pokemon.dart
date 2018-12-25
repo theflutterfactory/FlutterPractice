@@ -8,7 +8,8 @@ class Pokemon {
   double startingHealth;
   String image = 'assets/pikachu.png';
   bool isFavorite = false;
-  User user;
+  String userId;
+  String userEmail;
 
   Pokemon();
 }
