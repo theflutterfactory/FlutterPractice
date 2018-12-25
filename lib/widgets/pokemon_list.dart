@@ -7,9 +7,7 @@ import '../scoped-models/main.dart';
 
 class PokemonList extends StatelessWidget {
   Widget _buildPokemonList(List<Pokemon> pokemonList) {
-    Widget pokemonCard = Center(
-      child: Text("No Pokemon found, Go ahead and add one"),
-    );
+    Widget pokemonCard;
 
     if (pokemonList.length > 0) {
       pokemonCard = ListView.builder(

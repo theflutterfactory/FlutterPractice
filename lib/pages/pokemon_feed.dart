@@ -41,6 +41,21 @@ class _PokemonFeedState extends State<PokemonFeed> {
     );
   }
 
+  Widget _buildPokemonList() {
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
+      Widget content = Center(child: Text("No Pokemon Found!"));
+
+      if (model.displayedPokemon.length > 0 && !model.isLoading) {
+        content = PokemonList();
+      } else if (model.isLoading) {
+        content = Center(child: CircularProgressIndicator());
+      }
+
+      return content;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,15 +64,16 @@ class _PokemonFeedState extends State<PokemonFeed> {
         title: Text("Pokemon"),
         actions: <Widget>[
           ScopedModelDescendant<MainModel>(
-              builder: (BuildContext context, Widget child, MainModel model) {
-            return IconButton(
-              icon: Icon(model.displayFavoritesOnly ? Icons.favorite : Icons.favorite_border),
-              onPressed: () => model.toggleDisplayMode(),
-            );
-          })
+            builder: (BuildContext context, Widget child, MainModel model) {
+              return IconButton(
+                icon: Icon(model.displayFavoritesOnly ? Icons.favorite : Icons.favorite_border),
+                onPressed: () => model.toggleDisplayMode(),
+              );
+            },
+          )
         ],
       ),
-      body: PokemonList(),
+      body: _buildPokemonList(),
     );
   }
 }

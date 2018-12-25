@@ -8,8 +8,10 @@ mixin ConnectedPokemonModel on Model {
   List<Pokemon> _pokemonList = [];
   User _authenticatedUser;
   int _selPokemonIndex;
+  bool _isLoading = false;
 
   void addPokemon(Pokemon pokemon) {
+    _isLoading = true;
     final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
 
     Map<String, dynamic> pokemonData = {
@@ -23,6 +25,7 @@ mixin ConnectedPokemonModel on Model {
     };
 
     pokemonRef.add(pokemonData).then((value) {
+      _isLoading = false;
       pokemon.id = value.documentID;
       _pokemonList.add(pokemon);
       notifyListeners();
@@ -30,7 +33,9 @@ mixin ConnectedPokemonModel on Model {
   }
 
   void fetchPokemon() {
+    _isLoading = true;
     _pokemonList.clear();
+
     final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
     pokemonRef.getDocuments().then((snapshot) {
       snapshot.documents.map((DocumentSnapshot document) {
@@ -44,6 +49,8 @@ mixin ConnectedPokemonModel on Model {
         pokemon.startingHealth = document['health'];
         _pokemonList.add(pokemon);
       }).toList();
+
+      _isLoading = false;
 
       notifyListeners();
     });
@@ -121,5 +128,11 @@ mixin UserModel on ConnectedPokemonModel {
     _authenticatedUser.id = "testId";
     _authenticatedUser.email = email;
     _authenticatedUser.password = password;
+  }
+}
+
+mixin UtilityModel on ConnectedPokemonModel {
+  bool get isLoading {
+    return _isLoading;
   }
 }
