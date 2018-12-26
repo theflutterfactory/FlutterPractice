@@ -114,9 +114,16 @@ mixin PokemonModel on ConnectedPokemonModel {
     return _showFavorites;
   }
 
-  void deletePokemon(int index) {
+  void deletePokemon() {
+    _isLoading = true;
+    final deletedPokemonId = selectedPokemon.id;
     _pokemonList.removeAt(selectedPokemonIndex);
-    notifyListeners();
+    _selPokemonIndex = null;
+
+    Firestore.instance.collection('pokemon').document(deletedPokemonId).delete().then((_) {
+      _isLoading = false;
+      notifyListeners();
+    });
   }
 
   void toggleFavorite() {

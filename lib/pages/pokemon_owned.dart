@@ -43,7 +43,8 @@ class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
       key: Key(model.allpokemon[index].name),
       direction: DismissDirection.endToStart,
       onDismissed: (DismissDirection direction) {
-        model.deletePokemon(index);
+        model.selectPokemon(index);
+        model.deletePokemon();
       },
       background: Container(color: Colors.red),
       child: Column(
