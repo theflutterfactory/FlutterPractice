@@ -30,7 +30,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     if (model.selectedPokemonIndex == null) {
       model.addPokemon(_pokemon).then((_) => _showPokemonFeed(model));
     } else {
-      model.updatePokemon(_pokemon);
+      model.updatePokemon(_pokemon).then((_) => _showPokemonFeed(model));
     }
   }
 
@@ -113,16 +113,25 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   }
 
   Widget _buildPageContent(MainModel model) {
+    Pokemon selectedPokemon = model.selectedPokemon;
+
+    if (selectedPokemon != null) {
+      _pokemon.id = selectedPokemon.id;
+      _pokemon.userEmail = model.currentUser.email;
+      _pokemon.userId = selectedPokemon.userId;
+      _pokemon.image = selectedPokemon.image;
+    }
+
     return Container(
       margin: EdgeInsets.all(16),
       child: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
-            _buildNameField(model.selectedPokemon),
-            _buildDescriptionField(model.selectedPokemon),
-            _buildTypeField(model.selectedPokemon),
-            _buildHealthField(model.selectedPokemon),
+            _buildNameField(selectedPokemon),
+            _buildDescriptionField(selectedPokemon),
+            _buildTypeField(selectedPokemon),
+            _buildHealthField(selectedPokemon),
             SizedBox(height: 16),
             model.isLoading
                 ? Center(child: CircularProgressIndicator())
@@ -137,10 +146,6 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
-        if (model.selectedPokemon != null) {
-          print("Selected pokemon?: " + model.selectedPokemon.name);
-        }
-
         final Widget pageContent = _buildPageContent(model);
 
         return model.selectedPokemonIndex == null
