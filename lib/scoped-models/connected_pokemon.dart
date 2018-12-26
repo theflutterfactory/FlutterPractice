@@ -38,10 +38,10 @@ mixin ConnectedPokemonModel on Model {
     _isLoading = true;
     notifyListeners();
 
-    _pokemonList.clear();
-
     final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
     pokemonRef.getDocuments().then((snapshot) {
+      final List<Pokemon> fetchedPokemonList = [];
+
       snapshot.documents.map((DocumentSnapshot document) {
         Pokemon pokemon = new Pokemon();
         pokemon.id = document.documentID;
@@ -50,19 +50,40 @@ mixin ConnectedPokemonModel on Model {
         pokemon.type = document['type'];
         pokemon.image = document['image'];
         pokemon.userEmail = document['userEmail'];
+        pokemon.userId = document['userId'];
         pokemon.startingHealth = document['health'];
-        _pokemonList.add(pokemon);
+        fetchedPokemonList.add(pokemon);
       }).toList();
 
+      _pokemonList = fetchedPokemonList;
       _isLoading = false;
 
       notifyListeners();
     });
   }
 
-  void updatePokemon(Pokemon pokemon) {
-    _pokemonList[_selPokemonIndex] = pokemon;
-    notifyListeners();
+  Future<Null> updatePokemon(Pokemon updatePokemon) {
+    print("Attempting to update id: " + updatePokemon.id.toString());
+
+    Map<String, dynamic> updatedData = {
+      "name": updatePokemon.name,
+      "description": updatePokemon.description,
+      "type": updatePokemon.type,
+      "health": updatePokemon.startingHealth,
+      "userEmail": updatePokemon.userEmail,
+      "userId": updatePokemon.userId,
+      "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
+    };
+
+    return Firestore.instance
+        .collection('pokemon')
+        .document(updatePokemon.id)
+        .updateData(updatedData)
+        .then((_) {
+      _isLoading = false;
+      _pokemonList[_selPokemonIndex] = updatePokemon;
+      notifyListeners();
+    });
   }
 }
 
@@ -132,6 +153,10 @@ mixin UserModel on ConnectedPokemonModel {
     _authenticatedUser.id = "testId";
     _authenticatedUser.email = email;
     _authenticatedUser.password = password;
+  }
+
+  User get currentUser {
+    return _authenticatedUser;
   }
 }
 
