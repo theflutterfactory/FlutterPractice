@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 import './pokemon_create.dart';
 import '../scoped-models/main.dart';
+import '../models/pokemon.dart';
 
 class PokemonOwnedPage extends StatefulWidget {
   final MainModel model;
@@ -22,11 +23,11 @@ class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
     super.initState();
   }
 
-  Widget _buildEditButton(BuildContext context, MainModel model, int index) {
+  Widget _buildEditButton(BuildContext context, MainModel model, Pokemon pokemon) {
     return IconButton(
       icon: Icon(Icons.edit),
       onPressed: () {
-        model.selectPokemon(index);
+        model.selectPokemon(pokemon.id);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
@@ -38,12 +39,12 @@ class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
     );
   }
 
-  Widget _buildPokemonListItem(BuildContext context, MainModel model, int index) {
+  Widget _buildPokemonListItem(BuildContext context, MainModel model, Pokemon pokemon) {
     return Dismissible(
-      key: Key(model.allpokemon[index].name),
+      key: Key(pokemon.name),
       direction: DismissDirection.endToStart,
       onDismissed: (DismissDirection direction) {
-        model.selectPokemon(index);
+        model.selectPokemon(pokemon.id);
         model.deletePokemon();
       },
       background: Container(color: Colors.red),
@@ -51,11 +52,11 @@ class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
         children: <Widget>[
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(model.allpokemon[index].image),
+              backgroundImage: NetworkImage(pokemon.image),
             ),
-            title: Text(model.allpokemon[index].name),
-            subtitle: Text('Health: ${model.allpokemon[index].startingHealth.toString()}'),
-            trailing: _buildEditButton(context, model, index),
+            title: Text(pokemon.name),
+            subtitle: Text('Health: ${pokemon.startingHealth.toString()}'),
+            trailing: _buildEditButton(context, model, pokemon),
           ),
           Divider()
         ],
@@ -69,7 +70,8 @@ class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
       builder: (BuildContext context, Widget child, MainModel model) {
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) {
-            return _buildPokemonListItem(context, model, index);
+            Pokemon pokemon = model.allpokemon[index];
+            return _buildPokemonListItem(context, model, pokemon);
           },
           itemCount: model.allpokemon.length,
         );

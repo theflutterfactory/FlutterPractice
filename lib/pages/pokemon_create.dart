@@ -27,7 +27,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
 
     _formKey.currentState.save();
 
-    if (model.selectedPokemonIndex == null) {
+    if (model.selectedPokemonIndex == -1) {
       model.addPokemon(_pokemon).then((_) => _showPokemonFeed(model));
     } else {
       model.updatePokemon(_pokemon).then((_) => _showPokemonFeed(model));
@@ -148,7 +148,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
       builder: (BuildContext context, Widget child, MainModel model) {
         final Widget pageContent = _buildPageContent(model);
 
-        return model.selectedPokemonIndex == null
+        return model.selectedPokemonIndex == -1
             ? pageContent
             : Scaffold(
                 appBar: AppBar(title: Text("Edit Pokemon")),

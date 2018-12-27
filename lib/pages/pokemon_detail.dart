@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 import '../ui/button_dark.dart';
-import '../scoped-models/main.dart';
 import '../models/pokemon.dart';
 
 class PokemonDetail extends StatelessWidget {
-  final int pokemonIndex;
+  final Pokemon pokemon;
 
-  PokemonDetail(this.pokemonIndex);
+  PokemonDetail(this.pokemon);
 
   _showWarningDialog(BuildContext context) {
     showDialog(
@@ -43,35 +41,29 @@ class PokemonDetail extends StatelessWidget {
         Navigator.pop(context, false);
         return Future.value(false);
       },
-      child: ScopedModelDescendant<MainModel>(
-        builder: (BuildContext context, Widget child, MainModel model) {
-          final Pokemon _pokemon = model.allpokemon[pokemonIndex];
-
-          return Scaffold(
-            appBar: AppBar(title: Text(_pokemon.name)),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                SizedBox(height: 16),
-                Image.network(_pokemon.image, height: 200),
-                SizedBox(height: 16),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    _pokemon.description,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                SizedBox(height: 32),
-                Flex(
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[DarkButton('DELETE', () => _showWarningDialog(context))],
-                ),
-              ],
+      child: Scaffold(
+        appBar: AppBar(title: Text(pokemon.name)),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            SizedBox(height: 16),
+            Image.network(pokemon.image, height: 200),
+            SizedBox(height: 16),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                pokemon.description,
+                style: TextStyle(fontSize: 18),
+              ),
             ),
-          );
-        },
+            SizedBox(height: 32),
+            Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[DarkButton('DELETE', () => _showWarningDialog(context))],
+            ),
+          ],
+        ),
       ),
     );
   }

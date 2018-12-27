@@ -7,7 +7,7 @@ import '../models/user.dart';
 mixin ConnectedPokemonModel on Model {
   List<Pokemon> _pokemonList = [];
   User _authenticatedUser;
-  int _selPokemonIndex;
+  String _selectedPokemonId;
   bool _isLoading = false;
 
   Future<Null> addPokemon(Pokemon pokemon) {
@@ -59,9 +59,49 @@ mixin ConnectedPokemonModel on Model {
 
       _pokemonList = fetchedPokemonList;
       _isLoading = false;
-
       notifyListeners();
+      _selectedPokemonId = null;
     });
+  }
+}
+
+mixin PokemonModel on ConnectedPokemonModel {
+  bool _showFavorites = false;
+
+  List<Pokemon> get allpokemon {
+    return List.from(_pokemonList);
+  }
+
+  List<Pokemon> get displayedPokemon {
+    if (_showFavorites) {
+      return List.from(_pokemonList.where((Pokemon pokemon) => pokemon.isFavorite).toList());
+    }
+
+    return List.from(_pokemonList);
+  }
+
+  String get selectedPokemonId {
+    return _selectedPokemonId;
+  }
+
+  int get selectedPokemonIndex {
+    return _pokemonList.indexWhere((Pokemon pokemon) {
+      return pokemon.id == selectedPokemonId;
+    });
+  }
+
+  Pokemon get selectedPokemon {
+    if (selectedPokemonId == null) {
+      return null;
+    }
+
+    return _pokemonList.firstWhere((Pokemon pokemon) {
+      return pokemon.id == selectedPokemonId;
+    });
+  }
+
+  bool get displayFavoritesOnly {
+    return _showFavorites;
   }
 
   Future<Null> updatePokemon(Pokemon updatePokemon) {
@@ -83,44 +123,17 @@ mixin ConnectedPokemonModel on Model {
         .updateData(updatedData)
         .then((_) {
       _isLoading = false;
-      _pokemonList[_selPokemonIndex] = updatePokemon;
+      _pokemonList[selectedPokemonIndex] = updatePokemon;
       notifyListeners();
     });
-  }
-}
-
-mixin PokemonModel on ConnectedPokemonModel {
-  bool _showFavorites = false;
-
-  List<Pokemon> get allpokemon {
-    return List.from(_pokemonList);
-  }
-
-  List<Pokemon> get displayedPokemon {
-    if (_showFavorites) {
-      return List.from(_pokemonList.where((Pokemon pokemon) => pokemon.isFavorite).toList());
-    }
-
-    return List.from(_pokemonList);
-  }
-
-  int get selectedPokemonIndex {
-    return _selPokemonIndex;
-  }
-
-  Pokemon get selectedPokemon {
-    return selectedPokemonIndex != null ? _pokemonList[selectedPokemonIndex] : null;
-  }
-
-  bool get displayFavoritesOnly {
-    return _showFavorites;
   }
 
   void deletePokemon() {
     _isLoading = true;
     final deletedPokemonId = selectedPokemon.id;
     _pokemonList.removeAt(selectedPokemonIndex);
-    _selPokemonIndex = null;
+    _selectedPokemonId = null;
+    notifyListeners();
 
     Firestore.instance.collection('pokemon').document(deletedPokemonId).delete().then((_) {
       _isLoading = false;
@@ -132,6 +145,7 @@ mixin PokemonModel on ConnectedPokemonModel {
     final bool isFavorite = selectedPokemon.isFavorite;
     final bool newFavoriteStatus = !isFavorite;
     final Pokemon updatedPokemon = Pokemon();
+    updatedPokemon.id = selectedPokemon.id;
     updatedPokemon.name = selectedPokemon.name;
     updatedPokemon.description = selectedPokemon.description;
     updatedPokemon.startingHealth = selectedPokemon.startingHealth;
@@ -145,8 +159,8 @@ mixin PokemonModel on ConnectedPokemonModel {
     notifyListeners();
   }
 
-  void selectPokemon(int index) {
-    _selPokemonIndex = index;
+  void selectPokemon(String pokemonId) {
+    _selectedPokemonId = pokemonId;
     notifyListeners();
   }
 

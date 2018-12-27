@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './pages/auth.dart';
+import './models/pokemon.dart';
 import './pages/pokemon_admin.dart';
 import './pages/pokemon_feed.dart';
 import './pages/pokemon_detail.dart';
@@ -39,9 +40,12 @@ class _MyAppState extends State<MyApp> {
           }
 
           if (pathElements[1] == 'pokemon') {
-            final int index = int.parse(pathElements[2]);
+            final String pokemonId = pathElements[2];
+            final Pokemon pokemon = model.allpokemon.firstWhere((Pokemon pokemon) {
+              return pokemon.id == pokemonId;
+            });
             return MaterialPageRoute<bool>(
-              builder: (context) => PokemonDetail(index),
+              builder: (context) => PokemonDetail(pokemon),
             );
           }
 
