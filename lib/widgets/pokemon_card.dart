@@ -57,7 +57,12 @@ class PokemonCard extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),
             SizedBox(height: 16),
-            Image.network(pokemon.image, height: 150),
+            FadeInImage(
+              image: NetworkImage(pokemon.image),
+              height: 150,
+              fit: BoxFit.cover,
+              placeholder: AssetImage('assets/pikachu.png'),
+            ),
             SizedBox(height: 16),
             Text(pokemon.userEmail, style: TextStyle(color: Colors.white, fontSize: 16)),
             _buildIconOptionBar(context)
