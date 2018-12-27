@@ -34,12 +34,14 @@ mixin ConnectedPokemonModel on Model {
     });
   }
 
-  void fetchPokemon() {
-    _isLoading = true;
-    notifyListeners();
+  Future<Null> fetchPokemon(bool showLoadingIndicator) {
+    if (showLoadingIndicator) {
+      _isLoading = true;
+      notifyListeners();
+    }
 
     final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
-    pokemonRef.getDocuments().then((snapshot) {
+    return pokemonRef.getDocuments().then((snapshot) {
       final List<Pokemon> fetchedPokemonList = [];
 
       snapshot.documents.map((DocumentSnapshot document) {

@@ -17,7 +17,7 @@ class PokemonFeed extends StatefulWidget {
 class _PokemonFeedState extends State<PokemonFeed> {
   @override
   initState() {
-    widget.model.fetchPokemon();
+    widget.model.fetchPokemon(true);
     super.initState();
   }
 
@@ -52,7 +52,10 @@ class _PokemonFeedState extends State<PokemonFeed> {
         content = Center(child: CircularProgressIndicator());
       }
 
-      return content;
+      return RefreshIndicator(
+        child: content,
+        onRefresh: () => model.fetchPokemon(false),
+      );
     });
   }
 

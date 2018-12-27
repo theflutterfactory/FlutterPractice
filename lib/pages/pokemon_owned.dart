@@ -18,7 +18,7 @@ class PokemonOwnedPage extends StatefulWidget {
 class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
   @override
   initState() {
-    widget.model.fetchPokemon();
+    widget.model.fetchPokemon(true);
     super.initState();
   }
 
