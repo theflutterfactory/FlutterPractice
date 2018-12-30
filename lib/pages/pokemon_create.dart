@@ -20,6 +20,23 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     Navigator.pushReplacementNamed(context, '/pokemon_feed').then((_) => model.selectPokemon(null));
   }
 
+  void showErrorDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Something went wrong"),
+            content: Text("Please try again"),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text("OK"),
+              )
+            ],
+          );
+        });
+  }
+
   void _submitPokemon(MainModel model) {
     if (!_formKey.currentState.validate()) {
       return;
@@ -28,9 +45,23 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
     _formKey.currentState.save();
 
     if (model.selectedPokemonIndex == -1) {
-      model.addPokemon(_pokemon).then((_) => _showPokemonFeed(model));
+      model.addPokemon(_pokemon).then((bool success) {
+        if (success) {
+          _showPokemonFeed(model);
+        } else {
+          showErrorDialog();
+        }
+      });
     } else {
-      model.updatePokemon(_pokemon).then((_) => _showPokemonFeed(model));
+      model.updatePokemon(_pokemon).then(
+        (bool success) {
+          if (success) {
+            _showPokemonFeed(model);
+          } else {
+            showErrorDialog();
+          }
+        },
+      );
     }
   }
 

@@ -10,11 +10,11 @@ mixin ConnectedPokemonModel on Model {
   String _selectedPokemonId;
   bool _isLoading = false;
 
-  Future<Null> addPokemon(Pokemon pokemon) {
+  Future<bool> addPokemon(Pokemon pokemon) {
     _isLoading = true;
     notifyListeners();
 
-    final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
+    final CollectionReference pokemonRef = Firestore.instance.collection('dfaf');
 
     Map<String, dynamic> pokemonData = {
       "name": pokemon.name,
@@ -31,17 +31,23 @@ mixin ConnectedPokemonModel on Model {
       pokemon.id = value.documentID;
       _pokemonList.add(pokemon);
       notifyListeners();
+      return true;
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      print(error);
+      return false;
     });
   }
 
-  Future<Null> fetchPokemon(bool showLoadingIndicator) {
+  Future<dynamic> fetchPokemon(bool showLoadingIndicator) {
     if (showLoadingIndicator) {
       _isLoading = true;
       notifyListeners();
     }
 
     final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
-    return pokemonRef.getDocuments().then((snapshot) {
+    return pokemonRef.getDocuments().then<Null>((snapshot) {
       final List<Pokemon> fetchedPokemonList = [];
 
       snapshot.documents.map((DocumentSnapshot document) {
@@ -61,6 +67,11 @@ mixin ConnectedPokemonModel on Model {
       _isLoading = false;
       notifyListeners();
       _selectedPokemonId = null;
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      print(error);
+      return;
     });
   }
 }
@@ -104,7 +115,7 @@ mixin PokemonModel on ConnectedPokemonModel {
     return _showFavorites;
   }
 
-  Future<Null> updatePokemon(Pokemon updatePokemon) {
+  Future<bool> updatePokemon(Pokemon updatePokemon) {
     print("Attempting to update id: " + updatePokemon.id.toString());
 
     Map<String, dynamic> updatedData = {
@@ -125,19 +136,32 @@ mixin PokemonModel on ConnectedPokemonModel {
       _isLoading = false;
       _pokemonList[selectedPokemonIndex] = updatePokemon;
       notifyListeners();
+      return true;
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      print(error);
+      return false;
     });
+    ;
   }
 
-  void deletePokemon() {
+  Future<bool> deletePokemon() {
     _isLoading = true;
     final deletedPokemonId = selectedPokemon.id;
     _pokemonList.removeAt(selectedPokemonIndex);
     _selectedPokemonId = null;
     notifyListeners();
 
-    Firestore.instance.collection('pokemon').document(deletedPokemonId).delete().then((_) {
+    return Firestore.instance.collection('pokemon').document(deletedPokemonId).delete().then((_) {
       _isLoading = false;
       notifyListeners();
+      return true;
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      print(error);
+      return false;
     });
   }
 
