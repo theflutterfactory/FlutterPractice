@@ -15,6 +15,7 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final User user = new User();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _passwordController = new TextEditingController();
 
   void _login(Function login) {
     if (!_formKey.currentState.validate()) {
@@ -52,6 +53,7 @@ class _AuthPageState extends State<AuthPage> {
     return TextFormField(
       decoration: InputDecoration(labelText: "Password"),
       obscureText: true,
+      controller: _passwordController,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Password is required';
@@ -63,6 +65,18 @@ class _AuthPageState extends State<AuthPage> {
       },
       onSaved: (String value) {
         user.password = value;
+      },
+    );
+  }
+
+  Widget _buildConfirmPasswordField() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: "Confirm Password"),
+      obscureText: true,
+      validator: (String value) {
+        if (_passwordController.text != value) {
+          return 'Passwords do not match';
+        }
       },
     );
   }
@@ -99,6 +113,7 @@ class _AuthPageState extends State<AuthPage> {
                 SizedBox(height: 32),
                 _buildEmailField(),
                 _buildPasswordField(),
+                _buildConfirmPasswordField(),
                 SizedBox(height: 16),
                 _buildAcceptSwitch(),
                 SizedBox(height: 16),
