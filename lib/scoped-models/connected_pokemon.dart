@@ -10,36 +10,6 @@ mixin ConnectedPokemonModel on Model {
   String _selectedPokemonId;
   bool _isLoading = false;
 
-  Future<bool> addPokemon(Pokemon pokemon) {
-    _isLoading = true;
-    notifyListeners();
-
-    final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
-
-    Map<String, dynamic> pokemonData = {
-      "name": pokemon.name,
-      "description": pokemon.description,
-      "type": pokemon.type,
-      "health": pokemon.startingHealth,
-      "userEmail": _authenticatedUser.email,
-      "userId": _authenticatedUser.id,
-      "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
-    };
-
-    return pokemonRef.add(pokemonData).then((value) {
-      _isLoading = false;
-      pokemon.id = value.documentID;
-      _pokemonList.add(pokemon);
-      notifyListeners();
-      return true;
-    }).catchError((error) {
-      _isLoading = false;
-      notifyListeners();
-      print(error);
-      return false;
-    });
-  }
-
   Future<dynamic> fetchPokemon(bool showLoadingIndicator) {
     if (showLoadingIndicator) {
       _isLoading = true;
@@ -113,6 +83,36 @@ mixin PokemonModel on ConnectedPokemonModel {
 
   bool get displayFavoritesOnly {
     return _showFavorites;
+  }
+
+  Future<bool> addPokemon(Pokemon pokemon) {
+    _isLoading = true;
+    notifyListeners();
+
+    final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
+
+    Map<String, dynamic> pokemonData = {
+      "name": pokemon.name,
+      "description": pokemon.description,
+      "type": pokemon.type,
+      "health": pokemon.startingHealth,
+      "userEmail": _authenticatedUser.email,
+      "userId": _authenticatedUser.id,
+      "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
+    };
+
+    return pokemonRef.add(pokemonData).then((value) {
+      _isLoading = false;
+      pokemon.id = value.documentID;
+      _pokemonList.add(pokemon);
+      notifyListeners();
+      return true;
+    }).catchError((error) {
+      _isLoading = false;
+      notifyListeners();
+      print(error);
+      return false;
+    });
   }
 
   Future<bool> updatePokemon(Pokemon updatePokemon) {
