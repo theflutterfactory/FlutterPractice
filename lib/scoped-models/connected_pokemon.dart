@@ -14,7 +14,7 @@ mixin ConnectedPokemonModel on Model {
     _isLoading = true;
     notifyListeners();
 
-    final CollectionReference pokemonRef = Firestore.instance.collection('dfaf');
+    final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
 
     Map<String, dynamic> pokemonData = {
       "name": pokemon.name,
