@@ -5,6 +5,8 @@ import '../ui/button_dark.dart';
 import '../models/user.dart';
 import '../scoped-models/main.dart';
 
+enum AuthMode { Signup, Login }
+
 class AuthPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -16,6 +18,7 @@ class _AuthPageState extends State<AuthPage> {
   final User user = new User();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = new TextEditingController();
+  AuthMode _authMode = AuthMode.Login;
 
   void _login(Function login) {
     if (!_formKey.currentState.validate()) {
@@ -113,7 +116,18 @@ class _AuthPageState extends State<AuthPage> {
                 SizedBox(height: 32),
                 _buildEmailField(),
                 _buildPasswordField(),
-                _buildConfirmPasswordField(),
+                _authMode == AuthMode.Signup ? _buildConfirmPasswordField() : Container(),
+                SizedBox(height: 16),
+                FlatButton(
+                  child: Text(
+                    'Switch to ${_authMode == AuthMode.Login ? 'Signup' : 'Login'}',
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _authMode = _authMode == AuthMode.Login ? AuthMode.Signup : AuthMode.Login;
+                    });
+                  },
+                ),
                 SizedBox(height: 16),
                 _buildAcceptSwitch(),
                 SizedBox(height: 16),
