@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../ui/button_dark.dart';
 import '../models/user.dart';
@@ -20,13 +21,24 @@ class _AuthPageState extends State<AuthPage> {
   final TextEditingController _passwordController = new TextEditingController();
   AuthMode _authMode = AuthMode.Login;
 
-  void _login(Function login) {
+  void _submitForm(Function login, Function signup) {
     if (!_formKey.currentState.validate()) {
       return;
     }
 
     _formKey.currentState.save();
-    login(user.email, user.password);
+
+    if (_authMode == AuthMode.Login) {
+      login(user.email, user.password);
+    } else {
+      signup(user.email, user.password).then((FirebaseUser firebaseUser) {
+        if (firebaseUser != null) {
+          print(firebaseUser);
+        } else {
+          print("Something went wrong");
+        }
+      });
+    }
 
     Navigator.pushReplacementNamed(context, '/pokemon_feed');
   }
@@ -133,7 +145,8 @@ class _AuthPageState extends State<AuthPage> {
                 SizedBox(height: 16),
                 ScopedModelDescendant<MainModel>(
                   builder: (BuildContext context, Widget widget, MainModel model) {
-                    return DarkButton('LOGIN', () => _login(model.login));
+                    return DarkButton(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGNUP',
+                        () => _submitForm(model.login, model.signup));
                   },
                 )
               ],

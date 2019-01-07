@@ -1,5 +1,6 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/pokemon.dart';
 import '../models/user.dart';
@@ -143,7 +144,6 @@ mixin PokemonModel on ConnectedPokemonModel {
       print(error);
       return false;
     });
-    ;
   }
 
   Future<bool> deletePokemon() {
@@ -200,6 +200,15 @@ mixin UserModel on ConnectedPokemonModel {
     _authenticatedUser.id = "testId";
     _authenticatedUser.email = email;
     _authenticatedUser.password = password;
+  }
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future<FirebaseUser> signup(String email, String password) async {
+    final FirebaseUser user =
+        await auth.createUserWithEmailAndPassword(email: email, password: password);
+
+    return user;
   }
 
   User get currentUser {
