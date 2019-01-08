@@ -195,20 +195,40 @@ mixin PokemonModel on ConnectedPokemonModel {
 }
 
 mixin UserModel on ConnectedPokemonModel {
-  void login(String email, String password) {
-    _authenticatedUser = User();
-    _authenticatedUser.id = "testId";
-    _authenticatedUser.email = email;
-    _authenticatedUser.password = password;
+  Future<FirebaseUser> login(String email, String password) async {
+    _isLoading = true;
+    notifyListeners();
+
+    final FirebaseUser user = await auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .catchError((onError) => print(onError));
+
+    _isLoading = false;
+    notifyListeners();
+    return user;
   }
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<FirebaseUser> signup(String email, String password) async {
-    final FirebaseUser user =
-        await auth.createUserWithEmailAndPassword(email: email, password: password);
+    _isLoading = true;
+    notifyListeners();
 
+    final FirebaseUser user = await auth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .catchError((onError) => print(onError));
+
+    _isLoading = false;
+    notifyListeners();
     return user;
+  }
+
+  Future<bool> signout() async {
+    await FirebaseAuth.instance.signOut().catchError((onError) {
+      print(onError);
+      return false;
+    });
+    return true;
   }
 
   User get currentUser {
