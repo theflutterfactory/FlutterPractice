@@ -21,6 +21,18 @@ class _AuthPageState extends State<AuthPage> {
   final TextEditingController _passwordController = new TextEditingController();
   AuthMode _authMode = AuthMode.Login;
 
+  @override
+  initState() {
+    FirebaseAuth.instance.onAuthStateChanged.listen((firebaseUser) {
+      if (firebaseUser != null) {
+        print("sign in ok");
+        Navigator.pushReplacementNamed(context, '/pokemon_feed');
+      }
+    });
+
+    super.initState();
+  }
+
   void _submitForm(Function login, Function signup) {
     if (!_formKey.currentState.validate()) {
       return;
@@ -29,18 +41,22 @@ class _AuthPageState extends State<AuthPage> {
     _formKey.currentState.save();
 
     if (_authMode == AuthMode.Login) {
-      login(user.email, user.password);
+      login(user.email, user.password).then((FirebaseUser firebaseUser) {
+        if (firebaseUser != null) {
+          print(firebaseUser);
+        } else {
+          print("Something went wrong logging int");
+        }
+      });
     } else {
       signup(user.email, user.password).then((FirebaseUser firebaseUser) {
         if (firebaseUser != null) {
           print(firebaseUser);
         } else {
-          print("Something went wrong");
+          print("Something went wrong signing up");
         }
       });
     }
-
-    Navigator.pushReplacementNamed(context, '/pokemon_feed');
   }
 
   Widget _buildEmailField() {
@@ -145,8 +161,12 @@ class _AuthPageState extends State<AuthPage> {
                 SizedBox(height: 16),
                 ScopedModelDescendant<MainModel>(
                   builder: (BuildContext context, Widget widget, MainModel model) {
-                    return DarkButton(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGNUP',
-                        () => _submitForm(model.login, model.signup));
+                    return model.isLoading
+                        ? CircularProgressIndicator()
+                        : DarkButton(
+                            _authMode == AuthMode.Login ? 'LOGIN' : 'SIGNUP',
+                            () => _submitForm(model.login, model.signup),
+                          );
                   },
                 )
               ],
