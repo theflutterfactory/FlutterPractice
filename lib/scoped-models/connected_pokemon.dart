@@ -7,7 +7,7 @@ import '../models/user.dart';
 
 mixin ConnectedPokemonModel on Model {
   List<Pokemon> _pokemonList = [];
-  User _authenticatedUser;
+  FirebaseUser _firebaseUser;
   String _selectedPokemonId;
   bool _isLoading = false;
 
@@ -97,8 +97,8 @@ mixin PokemonModel on ConnectedPokemonModel {
       "description": pokemon.description,
       "type": pokemon.type,
       "health": pokemon.startingHealth,
-      "userEmail": _authenticatedUser.email,
-      "userId": _authenticatedUser.id,
+      "userEmail": _firebaseUser.email,
+      "userId": _firebaseUser.uid,
       "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
     };
 
@@ -231,8 +231,12 @@ mixin UserModel on ConnectedPokemonModel {
     return true;
   }
 
-  User get currentUser {
-    return _authenticatedUser;
+  FirebaseUser get currentUser {
+    return _firebaseUser;
+  }
+
+  set user(FirebaseUser user) {
+    _firebaseUser = user;
   }
 }
 

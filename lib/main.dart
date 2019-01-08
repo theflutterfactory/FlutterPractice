@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
       model: model,
       child: MaterialApp(
         theme: ThemeData(primarySwatch: Colors.red, accentColor: Colors.purple),
-        home: AuthPage(),
+        home: AuthPage(model),
         routes: {
           '/pokemon_feed': (context) => PokemonFeed(model),
           '/admin': (context) => PokemonAdminPage(model),

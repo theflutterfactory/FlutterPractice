@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../scoped-models/main.dart';
 import '../widgets/pokemon_list.dart';
@@ -21,20 +22,29 @@ class _PokemonFeedState extends State<PokemonFeed> {
     super.initState();
   }
 
-  Widget _buildSideDrawer(BuildContext context) {
+  Widget _buildSideDrawer(BuildContext context, MainModel model) {
     return Drawer(
       child: Column(
         children: <Widget>[
           AppBar(
             automaticallyImplyLeading: false,
-            title: Text("Julian Currie"),
+            title: Text(model.currentUser.email),
           ),
           ListTile(
             leading: Icon(Icons.edit),
             title: Text('Manage Pokemon'),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/admin');
-            },
+            onTap: () => Navigator.pushReplacementNamed(context, '/admin'),
+          ),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Signout'),
+            onTap: () => model.signout().then(
+                  (success) {
+                    if (success) {
+                      Navigator.pushReplacementNamed(context, '/');
+                    }
+                  },
+                ),
           )
         ],
       ),
@@ -61,22 +71,22 @@ class _PokemonFeedState extends State<PokemonFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: _buildSideDrawer(context),
-      appBar: AppBar(
-        title: Text("Pokemon"),
-        actions: <Widget>[
-          ScopedModelDescendant<MainModel>(
-            builder: (BuildContext context, Widget child, MainModel model) {
-              return IconButton(
+    return ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
+        return Scaffold(
+          drawer: _buildSideDrawer(context, model),
+          appBar: AppBar(
+            title: Text("Pokemon"),
+            actions: <Widget>[
+              IconButton(
                 icon: Icon(model.displayFavoritesOnly ? Icons.favorite : Icons.favorite_border),
                 onPressed: () => model.toggleDisplayMode(),
-              );
-            },
-          )
-        ],
-      ),
-      body: _buildPokemonList(),
+              )
+            ],
+          ),
+          body: _buildPokemonList(),
+        );
+      },
     );
   }
 }

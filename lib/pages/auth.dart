@@ -9,6 +9,10 @@ import '../scoped-models/main.dart';
 enum AuthMode { Signup, Login }
 
 class AuthPage extends StatefulWidget {
+  final MainModel model;
+
+  AuthPage(this.model);
+
   @override
   State<StatefulWidget> createState() {
     return _AuthPageState();
@@ -16,7 +20,7 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final User user = new User();
+  final User user = new User(); //User is only used to hold form data for now
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = new TextEditingController();
   AuthMode _authMode = AuthMode.Login;
@@ -26,7 +30,10 @@ class _AuthPageState extends State<AuthPage> {
     FirebaseAuth.instance.onAuthStateChanged.listen((firebaseUser) {
       if (firebaseUser != null) {
         print("sign in ok");
+        widget.model.user = firebaseUser;
         Navigator.pushReplacementNamed(context, '/pokemon_feed');
+      } else {
+        widget.model.user = null;
       }
     });
 
