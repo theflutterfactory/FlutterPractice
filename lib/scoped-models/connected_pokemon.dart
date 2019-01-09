@@ -125,7 +125,7 @@ mixin PokemonModel on ConnectedPokemonModel {
       "type": updatePokemon.type,
       "health": updatePokemon.startingHealth,
       "userEmail": updatePokemon.userEmail,
-      "userId": updatePokemon.userId,
+      "favoriteUsers": updatePokemon.favoriteUsers,
       "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
     };
 
@@ -165,9 +165,30 @@ mixin PokemonModel on ConnectedPokemonModel {
     });
   }
 
-  void toggleFavorite() {
+  void toggleFavorite() async {
     final bool isFavorite = selectedPokemon.isFavorite;
     final bool newFavoriteStatus = !isFavorite;
+
+    if (newFavoriteStatus) {
+      await Firestore.instance.collection('pokemon').document(selectedPokemon.id).updateData({
+        'favoriteUsers': FieldValue.arrayUnion([_firebaseUser.uid]),
+      }).catchError((error) {
+        _isLoading = false;
+        notifyListeners();
+        print(error);
+        return false;
+      });
+    } else {
+      await Firestore.instance.collection('pokemon').document(selectedPokemon.id).updateData({
+        'favoriteUsers': FieldValue.arrayRemove([_firebaseUser.uid]),
+      }).catchError((error) {
+        _isLoading = false;
+        notifyListeners();
+        print(error);
+        return false;
+      });
+    }
+
     final Pokemon updatedPokemon = Pokemon();
     updatedPokemon.id = selectedPokemon.id;
     updatedPokemon.name = selectedPokemon.name;
@@ -180,6 +201,8 @@ mixin PokemonModel on ConnectedPokemonModel {
     updatedPokemon.isFavorite = newFavoriteStatus;
 
     _pokemonList[selectedPokemonIndex] = updatedPokemon;
+    _isLoading = false;
+
     notifyListeners();
   }
 

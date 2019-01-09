@@ -8,6 +8,7 @@ class Pokemon {
   bool isFavorite = false;
   String userId;
   String userEmail;
+  var favoriteUsers = [];
 
   Pokemon();
 }
