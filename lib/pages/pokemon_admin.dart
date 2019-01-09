@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './pokemon_create.dart';
 import './pokemon_owned.dart';
 import '../scoped-models/main.dart';
+import '../ui/logout_list_tile.dart';
 
 class PokemonAdminPage extends StatelessWidget {
   final MainModel model;
@@ -23,7 +24,8 @@ class PokemonAdminPage extends StatelessWidget {
             onTap: () {
               Navigator.pushReplacementNamed(context, '/pokemon_feed');
             },
-          )
+          ),
+          LogoutListTile(model)
         ],
       ),
     );

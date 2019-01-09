@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../scoped-models/main.dart';
 import '../widgets/pokemon_list.dart';
+import '../ui/logout_list_tile.dart';
 
 class PokemonFeed extends StatefulWidget {
   final MainModel model;
@@ -35,17 +35,7 @@ class _PokemonFeedState extends State<PokemonFeed> {
             title: Text('Manage Pokemon'),
             onTap: () => Navigator.pushReplacementNamed(context, '/admin'),
           ),
-          ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Signout'),
-            onTap: () => model.signout().then(
-                  (success) {
-                    if (success) {
-                      Navigator.pushReplacementNamed(context, '/');
-                    }
-                  },
-                ),
-          )
+          LogoutListTile(model)
         ],
       ),
     );
