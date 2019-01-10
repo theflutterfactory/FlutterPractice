@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/pokemon.dart';
-import '../models/user.dart';
 
 mixin ConnectedPokemonModel on Model {
   List<Pokemon> _pokemonList = [];
@@ -31,6 +30,10 @@ mixin ConnectedPokemonModel on Model {
         pokemon.userEmail = document['userEmail'];
         pokemon.userId = document['userId'];
         pokemon.startingHealth = document['health'];
+        pokemon.isFavorite = document['favoriteUsers'] == null
+            ? false
+            : (document['favoriteUsers'] as List<dynamic>).contains(_firebaseUser.uid);
+
         fetchedPokemonList.add(pokemon);
       }).toList();
 
@@ -56,7 +59,7 @@ mixin PokemonModel on ConnectedPokemonModel {
 
   List<Pokemon> get displayedPokemon {
     if (_showFavorites) {
-      return List.from(_pokemonList.where((Pokemon pokemon) => pokemon.isFavorite).toList());
+      return List.from(_pokemonList.where((Pokemon pokemon) => pokemon.isFavorite));
     }
 
     return List.from(_pokemonList);
@@ -198,6 +201,7 @@ mixin PokemonModel on ConnectedPokemonModel {
     updatedPokemon.type = selectedPokemon.type;
     updatedPokemon.userEmail = selectedPokemon.userEmail;
     updatedPokemon.userId = selectedPokemon.userId;
+    updatedPokemon.favoriteUsers = selectedPokemon.favoriteUsers;
     updatedPokemon.isFavorite = newFavoriteStatus;
 
     _pokemonList[selectedPokemonIndex] = updatedPokemon;
