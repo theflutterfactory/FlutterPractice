@@ -18,7 +18,7 @@ class PokemonFeed extends StatefulWidget {
 class _PokemonFeedState extends State<PokemonFeed> {
   @override
   initState() {
-    widget.model.fetchPokemon(true);
+    widget.model.fetchPokemon();
     super.initState();
   }
 
@@ -54,7 +54,7 @@ class _PokemonFeedState extends State<PokemonFeed> {
 
       return RefreshIndicator(
         child: content,
-        onRefresh: () => model.fetchPokemon(false),
+        onRefresh: () => model.fetchPokemon(showLoadingIndicator: false),
       );
     });
   }

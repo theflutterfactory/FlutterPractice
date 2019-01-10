@@ -19,7 +19,7 @@ class PokemonOwnedPage extends StatefulWidget {
 class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
   @override
   initState() {
-    widget.model.fetchPokemon(true);
+    widget.model.fetchPokemon(onlyForUser: true);
     super.initState();
   }
 
@@ -68,13 +68,15 @@ class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
-        return ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            Pokemon pokemon = model.allpokemon[index];
-            return _buildPokemonListItem(context, model, pokemon);
-          },
-          itemCount: model.allpokemon.length,
-        );
+        return model.isLoading
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  Pokemon pokemon = model.allpokemon[index];
+                  return _buildPokemonListItem(context, model, pokemon);
+                },
+                itemCount: model.allpokemon.length,
+              );
       },
     );
   }

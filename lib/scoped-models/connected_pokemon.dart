@@ -10,7 +10,7 @@ mixin ConnectedPokemonModel on Model {
   String _selectedPokemonId;
   bool _isLoading = false;
 
-  Future<dynamic> fetchPokemon(bool showLoadingIndicator) {
+  Future<dynamic> fetchPokemon({onlyForUser = false, showLoadingIndicator = true}) {
     if (showLoadingIndicator) {
       _isLoading = true;
       notifyListeners();
@@ -37,7 +37,12 @@ mixin ConnectedPokemonModel on Model {
         fetchedPokemonList.add(pokemon);
       }).toList();
 
-      _pokemonList = fetchedPokemonList;
+      _pokemonList = onlyForUser
+          ? fetchedPokemonList
+              .where((Pokemon filteredPokemon) => filteredPokemon.userId == _firebaseUser.uid)
+              .toList()
+          : fetchedPokemonList;
+
       _isLoading = false;
       notifyListeners();
       _selectedPokemonId = null;
