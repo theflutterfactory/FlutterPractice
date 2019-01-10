@@ -10,34 +10,32 @@ class PokemonCard extends StatelessWidget {
 
   PokemonCard(this.pokemon, this.pokemonIndex);
 
-  Widget _buildFavoriteToggle(MainModel model) {
-    return IconButton(
-      icon:
-          Icon(model.allpokemon[pokemonIndex].isFavorite ? Icons.favorite : Icons.favorite_border),
-      color: Colors.white,
-      onPressed: () {
-        model.selectPokemon(model.allpokemon[pokemonIndex].id);
-        model.toggleFavorite();
-      },
-    );
+  Widget _buildFavoriteToggle() {
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
+      return IconButton(
+        icon: Icon(pokemon.isFavorite ? Icons.favorite : Icons.favorite_border),
+        color: Colors.white,
+        onPressed: () {
+          model.selectPokemon(pokemon.id);
+          model.toggleFavorite();
+        },
+      );
+    });
   }
 
   Widget _buildIconOptionBar(BuildContext context) {
-    return ScopedModelDescendant<MainModel>(
-        builder: (BuildContext context, Widget child, MainModel model) {
-      return ButtonBar(
-        alignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.description),
-            color: Colors.white,
-            onPressed: () =>
-                Navigator.pushNamed<bool>(context, '/pokemon/' + model.allpokemon[pokemonIndex].id),
-          ),
-          _buildFavoriteToggle(model)
-        ],
-      );
-    });
+    return ButtonBar(
+      alignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        IconButton(
+          icon: Icon(Icons.description),
+          color: Colors.white,
+          onPressed: () => Navigator.pushNamed<bool>(context, '/pokemon/' + pokemon.id),
+        ),
+        _buildFavoriteToggle()
+      ],
+    );
   }
 
   @override
