@@ -10,10 +10,20 @@ class ImageSelector extends StatefulWidget {
 }
 
 class _ImageSelectorState extends State<ImageSelector> {
-  void _getImage(ImageSource source) {
-    ImagePicker.pickImage(source: source, maxWidth: 400).then((File iamge) {
-      Navigator.pop(context);
-    });
+  Widget _buildImageSourceButton(String buttonText, ImageSource source) {
+    return FlatButton(
+      textColor: Theme.of(context).primaryColor,
+      child: Text(
+        buttonText,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      onPressed: () => ImagePicker.pickImage(
+            source: source,
+            maxWidth: 400,
+          ).then((File iamge) {
+            Navigator.pop(context);
+          }),
+    );
   }
 
   void _openImagePicker() {
@@ -28,23 +38,9 @@ class _ImageSelectorState extends State<ImageSelector> {
                 SizedBox(height: 16),
                 Text('Pick an Image'),
                 SizedBox(height: 16),
-                FlatButton(
-                  textColor: Theme.of(context).primaryColor,
-                  child: Text(
-                    'Use Camera',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () => _getImage(ImageSource.camera),
-                ),
+                _buildImageSourceButton('Use Camera', ImageSource.camera),
                 SizedBox(height: 8),
-                FlatButton(
-                  textColor: Theme.of(context).primaryColor,
-                  child: Text(
-                    'Use Gallery',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () => _getImage(ImageSource.gallery),
-                )
+                _buildImageSourceButton('Use Gallery', ImageSource.gallery),
               ],
             ),
           );
@@ -62,10 +58,8 @@ class _ImageSelectorState extends State<ImageSelector> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(Icons.camera_alt),
-              SizedBox(
-                width: 5,
-              ),
-              Text('Add Image')
+              SizedBox(width: 5),
+              Text('Add Image'),
             ],
           ),
         )
