@@ -4,6 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 import '../ui/button_dark.dart';
 import '../models/pokemon.dart';
 import '../scoped-models/main.dart';
+import '../widgets/image_selector.dart';
 
 class PokemonCreatePage extends StatefulWidget {
   @override
@@ -163,6 +164,8 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
             _buildDescriptionField(selectedPokemon),
             _buildTypeField(selectedPokemon),
             _buildHealthField(selectedPokemon),
+            SizedBox(height: 16),
+            ImageSelector(),
             SizedBox(height: 16),
             model.isLoading
                 ? Center(child: CircularProgressIndicator())
