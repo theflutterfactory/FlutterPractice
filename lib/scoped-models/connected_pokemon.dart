@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../models/pokemon.dart';
 
@@ -26,7 +28,7 @@ mixin ConnectedPokemonModel on Model {
         pokemon.name = document['name'];
         pokemon.description = document['description'];
         pokemon.type = document['type'];
-        pokemon.image = document['image'];
+        pokemon.imageUrl = document['image'];
         pokemon.userEmail = document['userEmail'];
         pokemon.userId = document['userId'];
         pokemon.startingHealth = document['health'];
@@ -94,10 +96,30 @@ mixin PokemonModel on ConnectedPokemonModel {
     return _showFavorites;
   }
 
-  Future<bool> addPokemon(Pokemon pokemon) {
+  Future<bool> uploadPokemonAndImage(File imageFile, Pokemon pokemon, {String imagePath}) async {
     _isLoading = true;
     notifyListeners();
 
+    print("uploadImage");
+    final StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child(_firebaseUser.uid).child(pokemon.name);
+
+    await firebaseStorageRef.putFile(imageFile).onComplete.catchError(
+      (onError) {
+        print(onError);
+        _isLoading = false;
+        notifyListeners();
+        return false;
+      },
+    );
+
+    String url = await firebaseStorageRef.getDownloadURL();
+    print("url: " + url);
+
+    return addPokemon(pokemon, url);
+  }
+
+  Future<bool> addPokemon(Pokemon pokemon, String imageUrl) async {
     final CollectionReference pokemonRef = Firestore.instance.collection('pokemon');
 
     Map<String, dynamic> pokemonData = {
@@ -107,7 +129,7 @@ mixin PokemonModel on ConnectedPokemonModel {
       "health": pokemon.startingHealth,
       "userEmail": _firebaseUser.email,
       "userId": _firebaseUser.uid,
-      "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
+      "image": imageUrl
     };
 
     return pokemonRef.add(pokemonData).then((value) {
@@ -134,7 +156,7 @@ mixin PokemonModel on ConnectedPokemonModel {
       "health": updatePokemon.startingHealth,
       "userEmail": updatePokemon.userEmail,
       "favoriteUsers": updatePokemon.favoriteUsers,
-      "image": "https://i.pinimg.com/originals/b0/08/64/b00864b192f158302f647196c8998574.png"
+      "image": updatePokemon.imageUrl
     };
 
     return Firestore.instance
@@ -202,7 +224,7 @@ mixin PokemonModel on ConnectedPokemonModel {
     updatedPokemon.name = selectedPokemon.name;
     updatedPokemon.description = selectedPokemon.description;
     updatedPokemon.startingHealth = selectedPokemon.startingHealth;
-    updatedPokemon.image = selectedPokemon.image;
+    updatedPokemon.imageUrl = selectedPokemon.imageUrl;
     updatedPokemon.type = selectedPokemon.type;
     updatedPokemon.userEmail = selectedPokemon.userEmail;
     updatedPokemon.userId = selectedPokemon.userId;

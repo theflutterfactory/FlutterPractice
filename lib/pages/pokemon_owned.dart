@@ -52,7 +52,7 @@ class _PokemonOwnedPageState extends State<PokemonOwnedPage> {
         children: <Widget>[
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(pokemon.image),
+              backgroundImage: NetworkImage(pokemon.imageUrl),
             ),
             title: Text(pokemon.name),
             subtitle: Text('Health: ${pokemon.startingHealth.toString()}'),

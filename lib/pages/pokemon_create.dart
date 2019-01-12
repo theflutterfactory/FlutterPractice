@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -15,13 +16,15 @@ class PokemonCreatePage extends StatefulWidget {
 
 class _PokemonCreatePageState extends State<PokemonCreatePage> {
   final Pokemon _pokemon = new Pokemon();
+  File _imageFile;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _showPokemonFeed(MainModel model) {
     Navigator.pushReplacementNamed(context, '/pokemon_feed').then((_) => model.selectPokemon(null));
   }
 
-  void showErrorDialog() {
+  void _showErrorDialog() {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -38,19 +41,23 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
         });
   }
 
+  void _setImage(File image) {
+    _imageFile = image;
+  }
+
   void _submitPokemon(MainModel model) {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState.validate() || _imageFile == null) {
       return;
     }
 
     _formKey.currentState.save();
 
     if (model.selectedPokemonIndex == -1) {
-      model.addPokemon(_pokemon).then((bool success) {
+      model.uploadPokemonAndImage(_imageFile, _pokemon).then((bool success) {
         if (success) {
           _showPokemonFeed(model);
         } else {
-          showErrorDialog();
+          _showErrorDialog();
         }
       });
     } else {
@@ -59,7 +66,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
           if (success) {
             _showPokemonFeed(model);
           } else {
-            showErrorDialog();
+            _showErrorDialog();
           }
         },
       );
@@ -151,7 +158,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
       _pokemon.id = selectedPokemon.id;
       _pokemon.userEmail = model.currentUser.email;
       _pokemon.userId = selectedPokemon.userId;
-      _pokemon.image = selectedPokemon.image;
+      _pokemon.imageUrl = selectedPokemon.imageUrl;
     }
 
     return Container(
@@ -165,7 +172,7 @@ class _PokemonCreatePageState extends State<PokemonCreatePage> {
             _buildTypeField(selectedPokemon),
             _buildHealthField(selectedPokemon),
             SizedBox(height: 16),
-            ImageSelector(),
+            ImageSelector(_setImage),
             SizedBox(height: 16),
             model.isLoading
                 ? Center(child: CircularProgressIndicator())

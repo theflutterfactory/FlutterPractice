@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageSelector extends StatefulWidget {
+  final Function setImage;
+
+  ImageSelector(this.setImage);
+
   @override
   State<StatefulWidget> createState() {
     return _ImageSelectorState();
@@ -22,8 +26,9 @@ class _ImageSelectorState extends State<ImageSelector> {
       onPressed: () => ImagePicker.pickImage(
             source: source,
             maxWidth: 400,
-          ).then((File image) {
-            setState(() => _imageFile = image);
+          ).then((File imageFile) {
+            setState(() => _imageFile = imageFile);
+            widget.setImage(imageFile);
             Navigator.pop(context);
           }),
     );

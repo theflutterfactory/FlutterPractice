@@ -55,7 +55,7 @@ class PokemonCard extends StatelessWidget {
             ),
             SizedBox(height: 16),
             FadeInImage(
-              image: NetworkImage(pokemon.image),
+              image: NetworkImage(pokemon.imageUrl),
               height: 150,
               fit: BoxFit.cover,
               placeholder: AssetImage('assets/pikachu.png'),

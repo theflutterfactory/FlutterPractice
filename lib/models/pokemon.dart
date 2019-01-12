@@ -4,7 +4,7 @@ class Pokemon {
   String description;
   String type;
   double startingHealth;
-  String image;
+  String imageUrl;
   bool isFavorite = false;
   String userId;
   String userEmail;
