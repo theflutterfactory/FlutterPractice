@@ -10,6 +10,8 @@ class ImageSelector extends StatefulWidget {
 }
 
 class _ImageSelectorState extends State<ImageSelector> {
+  File _imageFile;
+
   Widget _buildImageSourceButton(String buttonText, ImageSource source) {
     return FlatButton(
       textColor: Theme.of(context).primaryColor,
@@ -20,7 +22,8 @@ class _ImageSelectorState extends State<ImageSelector> {
       onPressed: () => ImagePicker.pickImage(
             source: source,
             maxWidth: 400,
-          ).then((File iamge) {
+          ).then((File image) {
+            setState(() => _imageFile = image);
             Navigator.pop(context);
           }),
     );
@@ -62,7 +65,17 @@ class _ImageSelectorState extends State<ImageSelector> {
               Text('Add Image'),
             ],
           ),
-        )
+        ),
+        SizedBox(height: 10),
+        _imageFile == null
+            ? Text("Please pick an image")
+            : Image.file(
+                _imageFile,
+                fit: BoxFit.fitWidth,
+                height: 300,
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width,
+              )
       ],
     );
   }
